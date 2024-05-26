@@ -10,12 +10,16 @@
     Height="450"
     mc:Ignorable="d">
     <Grid>
-        <Button
-            Width="200"
-            Height="50"
-            Background="MediumPurple"
-            Content="Hello"
-            FontSize="18"
-            Foreground="RosyBrown" />
+        <StackPanel>
+            <Button
+                Width="200"
+                Height="50"
+                Background="Black"
+                Content="Hello World"
+                FontSize="18"
+                FontStyle="Italic"
+                FontWeight="ExtraBlack"
+                Foreground="White" />
+        </StackPanel>
     </Grid>
 </Window>
