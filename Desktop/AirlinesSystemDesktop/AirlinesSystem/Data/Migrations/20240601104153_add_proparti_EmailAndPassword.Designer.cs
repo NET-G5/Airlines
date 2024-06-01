@@ -4,6 +4,7 @@ using AirlinesSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlinesSystem.Migrations
 {
     [DbContext(typeof(AirlineDbContext))]
-    partial class AirlineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240601104153_add_proparti_EmailAndPassword")]
+    partial class add_proparti_EmailAndPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

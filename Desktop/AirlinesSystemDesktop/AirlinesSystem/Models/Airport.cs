@@ -8,13 +8,17 @@ public class Airport
 {
     [Key]
     public long AirportID { get; set; }
-    [Required, StringLength(10)]
+    [Required]
+    [StringLength(10)]
     public string AirportCode { get; set; } 
-    [Required, StringLength(100)]
+    [Required]
+    [StringLength(100)]
     public string Name { get; set; }
-    [Required, StringLength(50)]
+    [Required]
+    [StringLength(50)]
     public string City { get; set; }
-    [Required, StringLength(50)]
+    [Required]
+    [StringLength(50)]
     public string Country { get; set; }
 
     public ICollection<Flight> OriginFlights { get; set; }

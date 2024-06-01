@@ -8,7 +8,8 @@ public class Flight
 {
     [Key]
     public long FlightID { get; set; }
-    [Required, StringLength(10)]
+    [Required]
+    [StringLength(10)]
     public string FlightNumber { get; set; }
     [Required]
     public long AircraftID { get; set; }
