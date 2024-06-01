@@ -8,11 +8,14 @@ public  class Aircraft
 {
     [Key]
     public long AircraftID { get; set; }
-    [Required, StringLength(10)]
+    [Required]
+    [StringLength(10)]
     public string TailNumber { get; set; } 
-    [Required, StringLength(50)]
+    [Required]
+    [StringLength(50)]
     public string Model { get; set; } 
-    [Required, StringLength(50)]
+    [Required]
+    [StringLength(50)]
     public string Manufacturer { get; set; } 
     [Required]
     public int SeatingCapacity { get; set; }
