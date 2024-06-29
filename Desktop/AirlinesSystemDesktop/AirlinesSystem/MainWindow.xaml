@@ -4,18 +4,107 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:AirlinesSystem"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views ="clr-namespace:AirlinesSystem.Views"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="950"
+    Height="600"
+    WindowStartupLocation="CenterScreen" 
     mc:Ignorable="d">
     <Grid>
-        <Button
-            Width="200"
-            Height="50"
-            Background="MediumPurple"
-            Content="Hello"
-            FontSize="18"
-            Foreground="RosyBrown" />
+        <materialDesign:Card
+ >
+            <TabControl
+    materialDesign:ColorZoneAssist.Mode="Standard"
+    materialDesign:ElevationAssist.Elevation="Dp0"
+    Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+   >
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel
+          Width="auto"
+          Height="auto">
+                            <materialDesign:PackIcon
+            Width="24"
+            Height="24"
+            HorizontalAlignment="Center"
+            Kind="AirplanePlus" />
+                            <TextBlock
+            HorizontalAlignment="Center"
+            Text="Flight" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <views:FlyghtWindow/>
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel
+          Width="auto"
+          Height="auto">
+                            <materialDesign:PackIcon
+            Width="24"
+            Height="24"
+            HorizontalAlignment="Center"
+            Kind="Person" />
+                            <TextBlock
+            HorizontalAlignment="Center"
+            Text="Customers" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <views:CustomerWindow/>
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel
+          Width="auto"
+          Height="auto">
+                            <materialDesign:PackIcon
+            Width="24"
+            Height="24"
+            HorizontalAlignment="Center"
+            Kind="AirplaneEdit" />
+                            <TextBlock
+            HorizontalAlignment="Center"
+            Text="Booking" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <views:BookingWindow/>
+                    </Grid>
+                </TabItem> 
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel
+          Width="60"
+          Height="30">
+                            <ToggleButton
+  Width="55"
+  Height="30"
+  Style="{StaticResource MaterialDesignSwitchToggleButton}"
+  ToolTip="MaterialDesignSwitchToggleButton with Custom Track Background"
+                       
+ >
+                                <materialDesign:ToggleButtonAssist.SwitchTrackOnBackground
+   >
+                                    <SolidColorBrush
+      Color="Green" />
+                                </materialDesign:ToggleButtonAssist.SwitchTrackOnBackground>
+                                <materialDesign:ToggleButtonAssist.SwitchTrackOffBackground
+   >
+                                    <SolidColorBrush
+      Color="Red" />
+                                </materialDesign:ToggleButtonAssist.SwitchTrackOffBackground>
+                            </ToggleButton>
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
+
+            </TabControl>
+        </materialDesign:Card>
     </Grid>
 </Window>

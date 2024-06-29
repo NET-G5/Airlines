@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="AirlinesSystem.Views.FlyghtWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AirlinesSystem.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ComboBox
+  Grid.Row="0"
+  Grid.Column="0"              
+  Width="280"
+  Height="60"              
+  materialDesign:HintAssist.Hint="Select Planes"
+  Style="{StaticResource MaterialDesignFilledComboBox}"
+ >
+                <ComboBoxItem
+    Content="Item 1" />
+                <ComboBoxItem
+    Content="Item 2" />
+                <ComboBoxItem
+    Content="Item 3" />
+            </ComboBox>
+            <ComboBox
+  Grid.Row="0"
+  Grid.Column="1"              
+  Width="200"
+  Height="50" 
+                Margin="0,0,15,0"
+   HorizontalAlignment="Right"
+  materialDesign:HintAssist.Hint="Departure"
+  Style="{StaticResource MaterialDesignFilledComboBox}"
+ >
+                <ComboBoxItem
+    Content="Item 1" />
+                <ComboBoxItem
+    Content="Item 2" />
+                <ComboBoxItem
+    Content="Item 3" />
+            </ComboBox>
+            <ComboBox
+  Grid.Row="0"
+  Grid.Column="2"              
+  Width="200"
+  Height="50"  
+  HorizontalAlignment="Left"
+                Margin="15,0,0,0"
+  materialDesign:HintAssist.Hint="Arrival"
+  Style="{StaticResource MaterialDesignFilledComboBox}"
+ >
+                <ComboBoxItem
+    Content="Item 1" />
+                <ComboBoxItem
+    Content="Item 2" />
+                <ComboBoxItem
+    Content="Item 3" />
+            </ComboBox>
+
+            <materialDesign:TimePicker
+                Grid.Column="1"
+                Grid.Row="1"
+  Width="200"
+                HorizontalAlignment="Right"
+                  Margin="0,0,15,0"
+                Height="50"
+  materialDesign:HintAssist.Hint="Start Fly"
+  Is24Hours="True"
+  Style="{StaticResource MaterialDesignOutlinedTimePicker}"
+  />
+            
+ <materialDesign:TimePicker
+                Grid.Column="2"
+                Grid.Row="1"
+     HorizontalAlignment="Left"
+  Width="200"
+                Height="50"
+       Margin="15,0,0,0"
+  materialDesign:HintAssist.Hint="End Fly"
+  Is24Hours="True"
+  Style="{StaticResource MaterialDesignOutlinedTimePicker}"
+  />
+
+
+        </Grid>
+    </Grid>
+</UserControl>
