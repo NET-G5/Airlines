@@ -1,19 +1,19 @@
-﻿<Application
-    x:Class="AirlinesSystem.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:AirlinesSystem"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    StartupUri="MainWindow.xaml">
+﻿<Application x:Class="AirlinesSystem.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AirlinesSystem"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
-             BaseTheme="Light"
-             PrimaryColor="DeepPurple"
-             SecondaryColor="Lime" />
+                    BaseTheme="Light"
+                    PrimaryColor="DeepPurple"
+                    SecondaryColor="Lime" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <BitmapImage x:Key="AppIcon" UriSource="C:\Users\rrama\Desktop\Maxamatxanov Begzhan C#\GitHubDesktop\Airlines Projects\Airlines\Desktop\AirlinesSystemDesktop\AirlinesSystem\Imagine\photo_2024-07-06_11-02-30.jpg"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

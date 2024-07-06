@@ -6,105 +6,75 @@
     xmlns:local="clr-namespace:AirlinesSystem"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:views ="clr-namespace:AirlinesSystem.Views"
-    Title="MainWindow"
+    xmlns:views="clr-namespace:AirlinesSystem.Views"
+    Title="AirlineSystemDecktop"
+    WindowState="Maximized"
+    WindowStyle="SingleBorderWindow"
     Width="950"
     Height="600"
-    WindowStartupLocation="CenterScreen" 
-    mc:Ignorable="d">
-    <Grid>
-        <materialDesign:Card
- >
-            <TabControl
-    materialDesign:ColorZoneAssist.Mode="Standard"
-    materialDesign:ElevationAssist.Elevation="Dp0"
-    Style="{StaticResource MaterialDesignNavigationRailTabControl}"
-   >
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel
-          Width="auto"
-          Height="auto">
-                            <materialDesign:PackIcon
-            Width="24"
-            Height="24"
-            HorizontalAlignment="Center"
-            Kind="AirplanePlus" />
-                            <TextBlock
-            HorizontalAlignment="Center"
-            Text="Flight" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid>
-                        <views:FlyghtWindow/>
-                    </Grid>
-                </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel
-          Width="auto"
-          Height="auto">
-                            <materialDesign:PackIcon
-            Width="24"
-            Height="24"
-            HorizontalAlignment="Center"
-            Kind="Person" />
-                            <TextBlock
-            HorizontalAlignment="Center"
-            Text="Customers" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid>
-                        <views:CustomerWindow/>
-                    </Grid>
-                </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel
-          Width="auto"
-          Height="auto">
-                            <materialDesign:PackIcon
-            Width="24"
-            Height="24"
-            HorizontalAlignment="Center"
-            Kind="AirplaneEdit" />
-                            <TextBlock
-            HorizontalAlignment="Center"
-            Text="Booking" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid>
-                        <views:BookingWindow/>
-                    </Grid>
-                </TabItem> 
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel
-          Width="60"
-          Height="30">
-                            <ToggleButton
-  Width="55"
-  Height="30"
-  Style="{StaticResource MaterialDesignSwitchToggleButton}"
-  ToolTip="MaterialDesignSwitchToggleButton with Custom Track Background"
-                       
- >
-                                <materialDesign:ToggleButtonAssist.SwitchTrackOnBackground
-   >
-                                    <SolidColorBrush
-      Color="Green" />
-                                </materialDesign:ToggleButtonAssist.SwitchTrackOnBackground>
-                                <materialDesign:ToggleButtonAssist.SwitchTrackOffBackground
-   >
-                                    <SolidColorBrush
-      Color="Red" />
-                                </materialDesign:ToggleButtonAssist.SwitchTrackOffBackground>
-                            </ToggleButton>
-                        </StackPanel>
-                    </TabItem.Header>
-                </TabItem>
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d"
+    Background="{DynamicResource MaterialDesignPaper}">
 
-            </TabControl>
-        </materialDesign:Card>
+    <Window.Icon >
+        <BitmapImage UriSource="C:\Users\rrama\Desktop\Maxamatxanov Begzhan C#\GitHubDesktop\Airlines Projects\Airlines\Desktop\AirlinesSystemDesktop\AirlinesSystem\Imagine\photo_2024-07-06_11-02-30.jpg"/>
+    </Window.Icon>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <StackPanel Grid.Column="0" Background="{DynamicResource MaterialDesignDarkForeground}">
+            <TextBlock Text="Airline" FontSize="24" Margin="20" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
+            <ListBox x:Name="menuListBox" Margin="10,20,10,0" Foreground="{DynamicResource MaterialDesignBody}" SelectionChanged="MenuListBox_SelectionChanged">
+                <ListBoxItem Content="Flight" Style="{StaticResource MaterialDesignListBoxItem}"/>
+                <ListBoxItem Content="Aircraft" Style="{StaticResource MaterialDesignListBoxItem}" IsSelected="True"/>
+                <ListBoxItem Content="Passengers" Style="{StaticResource MaterialDesignListBoxItem}"/>
+                <ListBoxItem Content="Employees" Style="{StaticResource MaterialDesignListBoxItem}" IsSelected="True"/>
+                <ListBoxItem Content="Positions" Style="{StaticResource MaterialDesignListBoxItem}"/>
+                <ListBoxItem Content="Payments" Style="{StaticResource MaterialDesignListBoxItem}"/>
+                <ListBoxItem Content="" Style="{StaticResource MaterialDesignListBoxItem}"/>
+            </ListBox>
+            <StackPanel VerticalAlignment="Bottom" Margin="10,340,10,10">
+                <Button Content="Settings" Margin="0,10,0,0" Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button Content="Support" Margin="0,10,0,0" Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button x:Name="LogoutButton" Content="Log out" Margin="0,10,0,0" Style="{StaticResource MaterialDesignFlatButton}" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Main Content -->
+        <Grid Grid.Column="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Top Bar -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Benjamin Franklin" Margin="0,0,10,0" Foreground="{DynamicResource MaterialDesignBody}"/>
+                <Button Content="🔔" Margin="0,0,10,0" Style="{StaticResource MaterialDesignFlatButton}" />
+                <Ellipse Width="50" Height="40">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="C:\Users\rrama\Desktop\Maxamatxanov Begzhan C#\GitHubDesktop\Airlines Projects\Airlines\Desktop\AirlinesSystemDesktop\AirlinesSystem\Imagine\benjamin-franklin-cut-on-new-260nw-2031485351.jpg.webp"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <views:CrudControl x:Name="crudControl" Visibility="Collapsed"/>
+                <views:PassengerCrudControl x:Name="passengerCrudControl" Visibility="Collapsed"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

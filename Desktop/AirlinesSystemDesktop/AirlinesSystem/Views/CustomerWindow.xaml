@@ -41,6 +41,7 @@
          Grid.Row="0"
          AutoGenerateColumns="False"
          Background="#FAFAFA"
+         ItemsSource="{Binding Employees}"
          IsReadOnly="True">
                 <DataGrid.InputBindings>
                     <MouseBinding Command="{Binding ShowDetailsCommand}" Gesture="LeftDoubleClick" />

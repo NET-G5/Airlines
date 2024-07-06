@@ -7,43 +7,36 @@ namespace AirlinesSystem.Models;
 public class Flight
 {
     [Key]
-    public long FlightID { get; set; }
+    public int ID { get; set; }
+
     [Required]
-    [StringLength(10)]
-    public string FlightNumber { get; set; }
+    public int AircraftID { get; set; }
+
     [Required]
-    public long AircraftID { get; set; }
+    public int FromID { get; set; }
+
     [Required]
-    public long OriginAirportID { get; set; }
+    public int ToID { get; set; }
+
     [Required]
-    public long DestinationAirportID { get; set; }
-    [Required]
-    public DateTime DepartureTime { get; set; }
-    [Required]
-    public DateTime ArrivalTime { get; set; }
-    public FlightStatus Status { get; set; } = FlightStatus.Scheduled;
+    public FlightStatus FlightStatus { get; set; } // Изменили тип данных
 
     [ForeignKey("AircraftID")]
-    public Aircraft Aircraft { get; set; }
-    [ForeignKey("OriginAirportID")]
-    public Airport OriginAirport { get; set; }
-    [ForeignKey("DestinationAirportID")]
-    public Airport DestinationAirport { get; set; }
+    public virtual Aircraft Aircraft { get; set; }
 
-    public ICollection<Booking> Bookings { get; set; }
-    public ICollection<FlightCrew> FlightCrews { get; set; }
+    [ForeignKey("FromID")]
+    public virtual From From { get; set; }
+
+    [ForeignKey("ToID")]
+    public virtual To To { get; set; }
 
     public Flight()
     {
-        FlightNumber = string.Empty;
         Aircraft = new Aircraft();
-        OriginAirport = new Airport();
-        DestinationAirport = new Airport();
-        Bookings = new List<Booking>();
-        FlightCrews = new List<FlightCrew>();
+        To = new To();
+        From = new From();
     }
 }
-
 public enum FlightStatus
 {
     Scheduled,

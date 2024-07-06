@@ -7,37 +7,47 @@ namespace AirlinesSystem.Models;
 public class Employee
 {
     [Key]
-    public long EmployeeID { get; set; }
+    public int ID { get; set; }
+
     [Required]
     [StringLength(50)]
     public string FirstName { get; set; }
+
     [Required]
     [StringLength(50)]
     public string LastName { get; set; }
     [Required]
-    [StringLength(50)]
-    public string Position { get; set; } = string.Empty;
+    public Gender GenderEmployee { get; set; } 
+
+    [Required]
+    public int PositionID { get; set; }
+
     [Required]
     public DateTime HireDate { get; set; }
+
     [Required]
-    [MaxLength(100)]
+    [StringLength(100)]
     public string Email { get; set; }
+
     [Required]
-    [MaxLength(100)]
+    [StringLength(100)]
     public string Password { get; set; }
-    [Required]
-    public long AccessLevelID { get; set; }
 
-    [ForeignKey("AccessLevelID")]
-    public AccessLevel AccessLevel { get; set; }
-
+    [ForeignKey("PositionID")]
+    public virtual Position Position { get; set; }
 
     public Employee()
     {
-        FirstName = string.Empty;
+        FirstName = string.Empty; 
         LastName = string.Empty;
-        Password = string.Empty;
         Email = string.Empty;
-        AccessLevel = new AccessLevel();
+        Password = string.Empty;
+        Position = new Position();
     }
+}
+
+public enum Gender
+{
+    Male,
+    Female
 }

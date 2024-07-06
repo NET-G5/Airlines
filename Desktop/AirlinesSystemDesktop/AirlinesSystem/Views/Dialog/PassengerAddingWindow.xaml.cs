@@ -12,16 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace AirlinesSystem.Views.Dialog
+namespace AirlinesSystem.Views.Dialog;
+
+/// <summary>
+/// Interaction logic for PassengerAddingWindow.xaml
+/// </summary>
+public partial class PassengerAddingWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for CustomerAddingWindow.xaml
-    /// </summary>
-    public partial class CustomerAddingWindow : Window
+    public PassengerAddingWindow()
     {
-        public CustomerAddingWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        WindowStartupLocation = WindowStartupLocation.CenterScreen;
     }
 }

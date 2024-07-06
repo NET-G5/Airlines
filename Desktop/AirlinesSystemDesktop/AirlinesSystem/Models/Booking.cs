@@ -1,34 +1,38 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace AirlinesSystem.Models;
 
 [Table(nameof(Booking))]
 public class Booking
 {
     [Key]
-    public long BookingID { get; set; }
+    public int ID { get; set; }
+
     [Required]
-    public long FlightID { get; set; }
+    public int FlightID { get; set; }
+
     [Required]
-    public long PassengerID { get; set; }
+    public int PassengerID { get; set; }
+
     [StringLength(5)]
-    public string SeatNumber { get; set; } 
-    public DateTime BookingDate { get; set; } 
+    public string SeatNumber { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime BookingDate { get; set; } = DateTime.Now;
+
+    [Required]
     [StringLength(20)]
-    public string BookingStatus { get; set; } 
-
-
-    [ForeignKey("FlightID")]
-    public Flight Flight { get; set; }
-    [ForeignKey("PassengerID")]
-    public Passenger Passenger { get; set; }
+    public BookingStatus Status { get; set; }
 
     public Booking()
     {
         SeatNumber = string.Empty;
-        BookingDate = DateTime.Now;
-        BookingStatus = "Confirmed";
-        Flight = new Flight();
-        Passenger = new Passenger();
     }
+}
+public enum BookingStatus
+{
+    Confirmed,
+    Pending,
+    Cancelled
 }
