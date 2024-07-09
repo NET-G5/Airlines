@@ -16,13 +16,28 @@ using System.Windows.Shapes;
 namespace AirlinesSystem.Views
 {
     /// <summary>
-    /// Interaction logic for FlyghtWindow.xaml
+    /// Interaction logic for BookingControl.xaml
     /// </summary>
-    public partial class FlyghtWindow : UserControl
+    public partial class BookingControlWindow : UserControl
     {
-        public FlyghtWindow()
+        public BookingControlWindow()
         {
             InitializeComponent();
+        }
+
+        private void AddPassenger_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

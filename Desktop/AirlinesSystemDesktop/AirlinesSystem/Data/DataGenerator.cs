@@ -6,6 +6,24 @@ public static class DataGenerator
 {
     private static Faker _faker = _faker = new Faker();
 
+    public static To GenerateTo()
+    {
+        return new To
+        {
+            Name = _faker.Address.City(),
+            Capital = new Capital { CapitalName = _faker.Address.City() } 
+        };
+    }
+
+    public static From GenerateFrom()
+    {
+        return new From
+        {
+            Name = _faker.Address.City(),
+            Capital = new Capital { CapitalName = _faker.Address.City() } 
+        };
+    }
+
     public static Aircraft GenerateAircraft()
     {
         return new Faker<Aircraft>()

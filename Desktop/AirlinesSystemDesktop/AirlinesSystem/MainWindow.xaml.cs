@@ -46,7 +46,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        string content = selectedItem.Content?.ToString(); // проверяем на null перед вызовом ToString()
+        string? content = selectedItem.Content.ToString(); // проверяем на null перед вызовом ToString()
         if (content == null)
         {
             return;
@@ -57,14 +57,32 @@ public partial class MainWindow : Window
             case "Passengers":
                 passengerCrudControl.Visibility = Visibility.Visible;
                 crudControl.Visibility = Visibility.Collapsed;
+                flightCrudControl.Visibility = Visibility.Collapsed;
+                bookingControl.Visibility = Visibility.Collapsed;
                 break;
             case "Employees":
                 crudControl.Visibility = Visibility.Visible;
                 passengerCrudControl.Visibility = Visibility.Collapsed;
+                flightCrudControl.Visibility = Visibility.Collapsed;
+                bookingControl.Visibility = Visibility.Collapsed;
+                break;
+            case "Flight":
+                flightCrudControl.Visibility = Visibility.Visible;
+                passengerCrudControl.Visibility = Visibility.Collapsed;
+                crudControl.Visibility = Visibility.Collapsed;
+                bookingControl.Visibility = Visibility.Collapsed;
+                break;
+            case "Booking":
+                bookingControl.Visibility = Visibility.Visible;
+                flightCrudControl.Visibility = Visibility.Collapsed;
+                passengerCrudControl.Visibility = Visibility.Collapsed;
+                crudControl.Visibility = Visibility.Collapsed;
                 break;
             default:
                 passengerCrudControl.Visibility = Visibility.Collapsed;
                 crudControl.Visibility = Visibility.Collapsed;
+                flightCrudControl.Visibility = Visibility.Collapsed;
+                bookingControl.Visibility = Visibility.Collapsed;
                 break;
         }
     }
@@ -72,5 +90,25 @@ public partial class MainWindow : Window
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
     {
         Application.Current.Shutdown();
+    }
+
+    private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+  private void DarkMode_Checked(object sender, RoutedEventArgs e)
+    {
+        
+    }
+
+    private void LightMode_Checked(object sender, RoutedEventArgs e)
+    {
+      
+
+    }
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }

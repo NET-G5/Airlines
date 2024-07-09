@@ -16,18 +16,25 @@ using System.Windows.Shapes;
 namespace AirlinesSystem.Views
 {
     /// <summary>
-    /// Interaction logic for BookingWindow.xaml
+    /// Interaction logic for FlightCrudControl.xaml
     /// </summary>
-    public partial class BookingWindow : UserControl
+    public partial class FlightCrudControl : UserControl
     {
-        public BookingWindow()
+        public FlightCrudControl()
         {
             InitializeComponent();
         }
 
-        private void Create_Click(object sender, RoutedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+     
     }
 }
