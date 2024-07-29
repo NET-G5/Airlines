@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineWeb", "AirlineWeb\AirlineWeb.csproj", "{5CCE3185-7FD2-466C-A038-B87C2D94FAC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airline.Domain", "Airline.Domain\Airline.Domain.csproj", "{D8A9B276-8AB0-4076-BC51-0203E79E75E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airline.Infrastructure", "Airline.Infrastructure\Airline.Infrastructure.csproj", "{16D35EA7-AA0E-4B30-B245-A361532D174E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CCE3185-7FD2-466C-A038-B87C2D94FAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CCE3185-7FD2-466C-A038-B87C2D94FAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CCE3185-7FD2-466C-A038-B87C2D94FAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CCE3185-7FD2-466C-A038-B87C2D94FAC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8A9B276-8AB0-4076-BC51-0203E79E75E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8A9B276-8AB0-4076-BC51-0203E79E75E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8A9B276-8AB0-4076-BC51-0203E79E75E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A9B276-8AB0-4076-BC51-0203E79E75E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D35EA7-AA0E-4B30-B245-A361532D174E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D35EA7-AA0E-4B30-B245-A361532D174E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D35EA7-AA0E-4B30-B245-A361532D174E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D35EA7-AA0E-4B30-B245-A361532D174E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
