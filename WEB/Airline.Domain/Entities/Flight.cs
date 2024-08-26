@@ -1,8 +1,9 @@
+using Airline.Domain.Common;
+
 namespace Airline.Domain.Entities;
 
-public class Flight
+public class Flight : AuditableEntity
 {
-    public int ID { get; set; }
     public string FlightNumber { get; set; }
     public int DepartureAirportID { get; set; }
     public int ArrivalAirportID { get; set; }

@@ -1,8 +1,9 @@
+using Airline.Domain.Common;
+
 namespace Airline.Domain.Entities;
 
-public class Booking
+public class Booking : AuditableEntity
 {
-    public int ID { get; set; }
     public int UserID { get; set; }
     public int FlightID { get; set; }
     public DateTime BookingDate { get; set; }

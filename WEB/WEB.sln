@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineWeb", "AirlineWeb\AirlineWeb.csproj", "{5CCE3185-7FD2-466C-A038-B87C2D94FAC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airline.WEB", "Airline.WEB\Airline.WEB.csproj", "{5CCE3185-7FD2-466C-A038-B87C2D94FAC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airline.Domain", "Airline.Domain\Airline.Domain.csproj", "{D8A9B276-8AB0-4076-BC51-0203E79E75E2}"
 EndProject
