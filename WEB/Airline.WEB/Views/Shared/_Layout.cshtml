@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Airline.WEB</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/Airline.WEB.styles.css" asp-append-version="true"/>
+
+    <!-- Syncfusion ASP.NET Core controls styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/26.2.4/material.css" />
+    <link rel="stylesheet" href="~/css/custom-styles.css" />
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+<!-- Alert Section -->
+<div class="alert-container">
+    <!-- Dismissible Alert -->
+    <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
+        <p class="mb-0">Join Tripma today and save up to 20% on your flight using code TRAVEL at checkout. Promotion valid for new users only.</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+
+<!-- Header Section -->
+<header class="header bg-purple text-white">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <!-- Logo and Navigation -->
+            <div class="col-md-3">
+                <div class="logo">
+                    <a href="/" class="text-white text-decoration-none">
+                        <img src="logo.png" alt="Logo" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Search Form -->
+            <div class="col-md-6">
+                <form class="search-form d-flex">
+                    <input type="text" class="form-control" placeholder="Search flights, hotels..." aria-label="Search">
+                    <button type="submit" class="btn btn-light">Search</button>
+                </form>
+            </div>
+
+            <!-- Buttons and Icons -->
+            <div class="col-md-3">
+                <div class="GlobalHeader_buttonGroup__OGEzN d-flex justify-content-end">
+                    <!-- Regional Settings -->
+                    <div>
+                        <button class="GlobalHeader_buttonDark__MDUxN" aria-label="Regional settings" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="1.5rem" height="1.5rem" class="GlobalHeader_icon__NjE0N">
+                                <path d="M10.53 6.61q-.716.222-1.404.527l-.271-.315a.17.17 0 0 1-.056-.12.17.17 0 0 1 .067-.098c.101-.092.219-.3.343-.52.185-.326.383-.677.56-.703.273-.04.498.577.636.952.06.166.103.284.125.277"></path>
+                                <path d="M2.762 8.173a10 10 0 1 1 18.477 7.654A10 10 0 0 1 2.762 8.173m12.162 2.824q.319-.058.63-.11c.394-.31.062-1.002-.417-1.153a4.4 4.4 0 0 0-1.496.032c-.501.02-1.108-.208-1.173-.706a2 2 0 0 1-.01-.155c-.005-.15-.01-.3-.124-.385a.42.42 0 0 0-.391-.001 10.5 10.5 0 0 0-1.473.871 1.7 1.7 0 0 1-1.63.166l.053-.968c.142-.18.405-.21.656-.24.29-.033.566-.065.62-.324a1.7 1.7 0 0 0-.021-.36c-.005-.39.38-.592.763-.793.384-.201.768-.403.766-.792a2 2 0 0 0-.189-.583 1.52 1.52 0 0 1 .497-1.495 8 8 0 0 0 .016 16q.084-.002.168-.009l.117-.006a11 11 0 0 1-.157-1.75c0-.23-.138-.251-.293-.275-.146-.023-.306-.048-.377-.253l-.05-.15c-.111-.34-.185-.566-.575-.6a1 1 0 0 1-.454-.132c-.121-.067-.196-.109-.52.017a1.99 1.99 0 0 1-2.16-.706 4.3 4.3 0 0 1-.805-2.258c.006-.261.086-.516.23-.733.07-.14.286-.264.482-.377.114-.065.22-.127.29-.186l.13-.11c.493-.418.854-.723.973-1.39L11 11c1.198.49 2.608.235 3.924-.003m1.08 1.731a4.93 4.93 0 0 0 3.191 2.747q.32-.66.514-1.367l-.618.124a.7.7 0 0 1-.48-.016.7.7 0 0 1-.246-.295 9.3 9.3 0 0 1-.852-2.18l-1.264.513a.43.43 0 0 0-.267.207.4.4 0 0 0 .022.267"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Saved Flights and Hotels -->
+                    <div>
+                        <button class="GlobalHeader_buttonDark__MDUxN" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="false" width="1.5rem" height="1.5rem" aria-label="Saved flights and hotels" class="GlobalHeader_icon__NjE0N">
+                                <path d="M10.23 4.072a4.77 4.77 0 0 0-6.62.577 5.51 5.51 0 0 0-1.39 5.408c.855 3.72 5.28 7.895 8.62 10.537a1.86 1.86 0 0 0 2.32 0c3.34-2.642 7.765-6.816 8.62-10.537a5.52 5.52 0 0 0-1.389-5.408 4.77 4.77 0 0 0-6.62-.577l-1.126.95a1 1 0 0 1-1.29 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Log in/Sign up -->
+                    <div>
+                        <button aria-label="Log in or sign up" class="GlobalHeader_buttonDark__MDUxN" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="1.5rem" height="1.5rem" data-testid="LoggedOutIcon" class="LoginButton_accountIcon__YWE3Y GlobalHeader_icon__NjE0N">
+                                <path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10M6.21 15.975A7.04 7.04 0 0 0 12 19a7.04 7.04 0 0 0 5.79-3.024c.427-.613.174-1.435-.5-1.762A12.06 12.06 0 0 0 12 13c-1.898 0-3.693.436-5.29 1.213-.673.327-.927 1.15-.5 1.762M10.994 5C10.17 5 9.5 5.618 9.5 6.381v2.31C9.5 9.965 10.62 11 12 11s2.5-1.035 2.5-2.31V6.382C14.5 5.618 13.83 5 13.005 5h-2.01z"></path>
+                            </svg>
+                            <span class="LoginButton_loginText__MjQxY" data-testid="LogInText">Log in</span>
+                        </button>
+                    </div>
+
+                    <!-- Menu Button -->
+                    <div class="GlobalHeader_menuButtonContainer__MzcwM">
+                        <button class="GlobalHeader_buttonDark__MDUxN" aria-label="Open menu" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="1.5rem" height="1.5rem" class="GlobalHeader_icon__NjE0N">
+                                <path d="M21 7H3c-.6 0-1-.4-1-1s.4-1 1-1h18c.6 0 1 .4 1 1s-.4 1-1 1m1 5c0 .6-.333 1-.833 1H2.833c-.5 0-.833-.4-.833-1s.333-1 .833-1h18.334c.5 0 .833.4.833 1m-1 6H3c-.6 0-1-.4-1-1s.4-1 1-1h18c.6 0 1 .4 1 1s-.4 1-1 1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<!-- Main Content -->
+<main role="main" class="container">
+    @RenderBody()
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.syncfusion.com/ej2/26.2.4/dist/ej2.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@RenderSection("Scripts", required: false)
+</body>
+</html>

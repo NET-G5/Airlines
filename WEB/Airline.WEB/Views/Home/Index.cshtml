@@ -1,0 +1,32 @@
+﻿@{
+ViewData["Title"] = "Home Page";
+}
+
+<!-- Background Section -->
+<div class="search-section">
+    <!-- Main Heading -->
+    <div class="text-center mt-5">
+        <h1 class="display-4 font-weight-bold text-white">It's more than just a trip</h1>
+    </div>
+
+    <!-- Search Form -->
+    <div class="mt-5">
+        <form class="row g-3 justify-content-center">
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="fromWhere" placeholder="From where?" aria-label="Departure location">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="toWhere" placeholder="Where to?" aria-label="Destination location">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="departureReturn" placeholder="Depart - Return" aria-label="Departure and return dates">
+            </div>
+            <div class="col-md-2">
+                <input type="number" class="form-control" id="numberOfAdults" value="1" min="1" max="10" aria-label="Number of adults">
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+        </form>
+    </div>
+</div>

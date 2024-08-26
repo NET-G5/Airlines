@@ -1,6 +1,8 @@
+using Airline.Domain.Common;
+
 namespace Airline.Domain.Entities;
 
-public class UserRole
+public class UserRole : AuditableEntity
 {
     public int ID { get; set; }
     public int UserID { get; set; }

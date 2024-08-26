@@ -1,9 +1,10 @@
+using Airline.Domain.Common;
+
 namespace Airline.Domain.Entities;
 
-public class Airport
+public class Airport : AuditableEntity
 {
-    public int ID { get; set; }
-    public string AirportName { get; set; }
+    public string Name { get; set; }
     public int CityID { get; set; }
     public int CountryID { get; set; }
     public virtual City City { get; set; }

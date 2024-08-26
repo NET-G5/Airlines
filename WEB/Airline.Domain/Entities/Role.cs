@@ -1,8 +1,9 @@
+using Airline.Domain.Common;
+
 namespace Airline.Domain.Entities;
 
-public class Role
+public class Role : AuditableEntity
 {
-    public int ID { get; set; }
     public string RoleName { get; set; }
     public virtual ICollection<UserRole> UserRoles { get; set; }
 }

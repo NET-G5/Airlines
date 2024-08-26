@@ -6,4 +6,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Bogus" Version="35.6.0" />
+      <PackageReference Include="Syncfusion.EJ.AspNet.Core" Version="20.4.0.44" />
+      <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="26.2.7" />
+    </ItemGroup>
+
 </Project>
