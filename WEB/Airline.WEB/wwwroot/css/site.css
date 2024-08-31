@@ -1,0 +1,83 @@
+/* site.css */
+
+/* Background Section */
+.search-section {
+    background-color: #6f42c1; /* Dark purple background */
+    color: #fff; /* White text color */
+}
+
+.search-section h1 {
+    font-size: 2.5rem; /* Adjust heading size */
+    font-weight: 700; /* Bold text */
+}
+
+.search-section p {
+    font-size: 1.25rem; /* Adjust paragraph size */
+}
+
+/* Flight List Section */
+.table thead {
+    background-color: #6f42c1; /* Purple header */
+    color: #fff; /* White text color */
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa; /* Light grey background on hover */
+}
+
+.table .btn-info {
+    color: #fff;
+    background-color: #17a2b8; /* Bootstrap info color */
+    border-color: #17a2b8; /* Border color to match button */
+}
+
+.table .btn-info:hover {
+    color: #fff;
+    background-color: #138496; /* Darker info color on hover */
+    border-color: #117a8b; /* Darker border color on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .search-section h1 {
+        font-size: 2rem;
+    }
+    .search-section p {
+        font-size: 1rem;
+    }
+}
+
+.icon-large {
+    font-size: 24px; /* Увеличьте размер иконки */
+    color: #007bff;  /* Цвет иконки, измените по необходимости */
+    display: block;  /* Сделайте иконку блочным элементом */
+    margin: 0 auto; /* Центрируйте иконку горизонтально */
+}
+
+
+
+
+footer {
+    background-color: #343a40; /* Темный фон футера */
+}
+
+footer h5 {
+    font-weight: 600;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer .text-muted {
+    color: #6c757d; /* Более светлый цвет текста для подложки */
+}
+
+footer .d-flex a {
+    font-size: 1.5rem;
+}
+

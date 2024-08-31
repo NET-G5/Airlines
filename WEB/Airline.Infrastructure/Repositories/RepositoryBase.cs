@@ -8,11 +8,11 @@ namespace Airline.Infrastructure.Repositories;
 public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : EntityBase
 {
     protected readonly AirlineDbContext _context;
-
     
     protected RepositoryBase(AirlineDbContext context)
     {
-        _context = context;
+        // _context = context;
+        _context = new();
     }
     
     public List<TEntity> GetAll() =>
@@ -50,9 +50,16 @@ public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : 
     
     private TEntity GetOrThrow(int id)
     {
-        var entity = _context.Set<TEntity>().AsNoTracking().FirstOrDefault(x => x.ID == id);
+        if (_context == null)
+        {
+            throw new InvalidOperationException("Database context is not initialized.");
+        }
 
-        if (entity is null)
+        var entity = _context.Set<TEntity>()
+            .AsNoTracking()
+            .FirstOrDefault(x => x.ID == id);
+
+        if (entity == null)
         {
             throw new EntityNotFoundException($"{typeof(TEntity)} with id:{id} is not found");
         }

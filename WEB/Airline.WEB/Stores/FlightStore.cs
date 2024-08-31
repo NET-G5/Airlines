@@ -1,21 +1,37 @@
+using Airline.Domain.Entities;
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure;
+using Airline.Infrastructure.Repositories;
 using AirlineWeb.Extensions;
+using AirlineWeb.Mappings;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.Flight;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Stores;
 
 public class FlightStore : IFlightStore
 {
+    private readonly AirlineDbContext _context;
     private readonly ICommonRepository _repository;
+    IQueryable<Flight> query;
     
-    public List<FlightView> GetAll(string? search)
+    public FlightStore(ICommonRepository repository, AirlineDbContext context)
     {
-        var flights = _repository.Flights.GetAll(search);
-        var viewModels = flights
+        _context = new();
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+    }
+    
+    public List<FlightView> GetAll(string where = "", string to = "",
+        string departure = "", string numberOfAdults = "")
+    {
+        var flights = _repository.Flights.GetAll(where, to, departure, numberOfAdults);
+        
+        var viewModels = ConvertFlight(flights)
             .Select(x => x.ToView()).ToList();
 
-        return viewModels;    }
+        return viewModels;
+    }
 
     public FlightView GetById(int id)
     {
@@ -60,5 +76,24 @@ public class FlightStore : IFlightStore
     {
         _repository.Flights.Delete(id);
         _repository.SaveChanges();
+    }
+    
+    public List<Flight> ConvertFlight(List<Flight> flights)
+    {
+        var flightIds = flights.Select(f => f.ID).ToList();
+
+        var allFlights = _context.Flights
+            .Where(f => flightIds.Contains(f.ID))
+            .Include(f => f.DepartureAirport)
+            .ThenInclude(a => a.Country)
+            .Include(f => f.ArrivalAirport)
+            .ThenInclude(a => a.Country)
+            .Include(f => f.DepartureAirport)
+            .ThenInclude(a => a.City)
+            .Include(f => f.ArrivalAirport)
+            .ThenInclude(a => a.City)
+            .ToList();
+
+        return allFlights;
     }
 }

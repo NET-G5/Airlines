@@ -1,148 +1,137 @@
+using Airline.Domain.Entities;
+using Airline.Domain.Interfaces;
+using Airline.Infrastructure;
+using AirlineWeb.Extensions;
+using AirlineWeb.Mappings;
+using AirlineWeb.Stores.Interfaces;
+using AirlineWeb.ViewModels.Flight;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Airline.Domain.Entities;
-using Airline.Infrastructure;
-public class FlightsController : Controller
+
+namespace AirlineWeb.Controllers
 {
-    private readonly AirlineDbContext _context;
-
-    public FlightsController(AirlineDbContext context)
+    public class FlightController : Controller
     {
-        _context = context;
-    }
+        private readonly AirlineDbContext _context;
+        private readonly ICommonRepository _commonRepository;
+        private readonly IFlightStore _flightStore;
 
-    // GET: Flights
-    public async Task<IActionResult> Index()
-    {
-        var flights = await _context.Flights
-            .Include(f => f.DepartureAirport)
-            .Include(f => f.ArrivalAirport)
-            .ToListAsync();
-        return View(flights);
-    }
-
-    // GET: Flights/Details/5
-    public async Task<IActionResult> Details(int? id)
-    {
-        if (id == null)
+        public FlightController(ICommonRepository commonRepository, 
+            IFlightStore flightStore, AirlineDbContext context)
         {
-            return NotFound();
+            _context = new();
+            _commonRepository = commonRepository;
+            _flightStore = flightStore;
         }
 
-        var flight = await _context.Flights
-            .Include(f => f.DepartureAirport)
-            .Include(f => f.ArrivalAirport)
-            .FirstOrDefaultAsync(m => m.ID == id);
-        if (flight == null)
+        // GET: /Flight/
+        public IActionResult Index(string where = "", string to = "", string departure = "", string numberOfAdults = "")
         {
-            return NotFound();
+            var flights = _flightStore.GetAll(where, to, departure, numberOfAdults);
+
+            ViewBag.where = where;
+            ViewBag.to = to;
+            ViewBag.departure = departure;
+            ViewBag.numberOfAdults = numberOfAdults;
+            
+            return View(flights);
         }
 
-        return View(flight);
-    }
-
-    // GET: Flights/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    // POST: Flights/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("ID,FlightNumber,DepartureAirportID,ArrivalAirportID,DepartureTime,ArrivalTime,Price")] Flight flight)
-    {
-        if (ModelState.IsValid)
+        // GET: /Flight/Create
+        public IActionResult Create()
         {
-            _context.Add(flight);
-            await _context.SaveChangesAsync();
+            return View();
+        }
+
+        // POST: /Flight/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(UpdateFlightView model)
+        {
+            if (ModelState.IsValid)
+            {
+                var flight = _flightStore.Create(model);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        // GET: /Flight/Edit/5
+        public IActionResult Edit(int id)
+        {
+            var flight = _flightStore.GetForUpdate(id);
+            return View(flight);
+        }
+
+        // POST: /Flight/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, UpdateFlightView model)
+        {
+            if (ModelState.IsValid)
+            {
+                _flightStore.Update(model);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        // GET: /Flight/Details/5
+        public IActionResult Details(int id)
+        {
+            var flight = ConvertFlight(id);
+
+            if (flight is null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = flight.ToView();
+            
+            return View(viewModel);
+        }
+
+        // GET: /Flight/Delete/5
+        public IActionResult Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var flight = _flightStore.GetById(id);
+
+            if (flight is null)
+            {
+                return NotFound();
+            }
+
+            return View(flight);
+        }
+
+        // POST: /Flight/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _flightStore.Delete(id);
             return RedirectToAction(nameof(Index));
         }
-        return View(flight);
-    }
-
-    // GET: Flights/Edit/5
-    public async Task<IActionResult> Edit(int? id)
-    {
-        if (id == null)
+        
+        private Flight ConvertFlight(int id)
         {
-            return NotFound();
+            var flight = _context.Flights
+                .Include(f => f.DepartureAirport)
+                .ThenInclude(f => f.Country)
+                .Include(f => f.ArrivalAirport)
+                .ThenInclude( f => f.Country)
+                .Include(f => f.DepartureAirport)
+                .ThenInclude(a => a.City)
+                .Include(f => f.ArrivalAirport)
+                .ThenInclude(a => a.City)
+                .FirstOrDefault(f => f.ID == id);
+
+            return flight;
         }
-
-        var flight = await _context.Flights.FindAsync(id);
-        if (flight == null)
-        {
-            return NotFound();
-        }
-        return View(flight);
-    }
-
-    // POST: Flights/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("ID,FlightNumber,DepartureAirportID,ArrivalAirportID,DepartureTime,ArrivalTime,Price")] Flight flight)
-    {
-        if (id != flight.ID)
-        {
-            return NotFound();
-        }
-
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                _context.Update(flight);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FlightExists(flight.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        return View(flight);
-    }
-
-    // GET: Flights/Delete/5
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var flight = await _context.Flights
-            .Include(f => f.DepartureAirport)
-            .Include(f => f.ArrivalAirport)
-            .FirstOrDefaultAsync(m => m.ID == id);
-        if (flight == null)
-        {
-            return NotFound();
-        }
-
-        return View(flight);
-    }
-
-    // POST: Flights/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var flight = await _context.Flights.FindAsync(id);
-        _context.Flights.Remove(flight);
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-
-    private bool FlightExists(int id)
-    {
-        return _context.Flights.Any(e => e.ID == id);
     }
 }

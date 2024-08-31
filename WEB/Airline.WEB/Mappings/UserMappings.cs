@@ -18,6 +18,17 @@ public static class UserMappings
         };
     }
     
+    public static User ToView(this UserView userView)
+    {
+        return new User
+        {
+            ID = userView.ID,
+            Username = userView.Username,
+            PasswordHash = userView.PasswordHash,
+            Email = userView.Email
+        };
+    }
+    
     public static UpdateUserView ToUpdateView(this User user)
     {
         return new UpdateUserView

@@ -1,0 +1,13 @@
+@model AirlineWeb.ViewModels.Booking.BookingView
+
+<h2>Booking Details</h2>
+
+<div>
+    <h4>Flight Number: @Model.FlightID</h4>
+    <p>Booking Date: @Model.BookingDate.ToShortDateString()</p>
+    <p>Seat Number: @Model.SeatNumber</p>
+    <p>Total Price: @Model.TotalPrice.ToString("C")</p>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

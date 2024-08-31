@@ -10,14 +10,21 @@ public static class DatabaseInitializer
 
     public static void GenerateAllData(AirlineDbContext context)
     {
-        CreateCountries(context);
-        CreateCities(context);
-        CreateAirports(context);
-        CreateFlights(context);
-        CreateUsers(context);
-        CreateRoles(context);
-        CreateUserRoles(context);
-        CreateBookings(context);
+        try
+        {
+            CreateCountries(context);
+            CreateCities(context);
+            CreateAirports(context);
+            CreateFlights(context);
+            CreateUsers(context);
+            CreateRoles(context);
+            CreateUserRoles(context);
+            CreateBookings(context);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при инициализации базы данных: {ex.Message}");
+        }
     }
 
     public static void CreateCountries(AirlineDbContext context)

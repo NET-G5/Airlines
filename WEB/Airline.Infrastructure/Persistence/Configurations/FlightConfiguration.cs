@@ -14,6 +14,7 @@ public class FlightConfiguration : IEntityTypeConfiguration<Flight>
         builder.Property(e => e.DepartureTime).IsRequired();
         builder.Property(e => e.ArrivalTime).IsRequired();
         builder.Property(e => e.Price).IsRequired();
+        builder.Property(e => e.Price).HasColumnType("decimal(18,2)");
         
         builder.HasMany(f => f.Bookings)
             .WithOne(b => b.Flight)
