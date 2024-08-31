@@ -1,7 +1,7 @@
 using Airline.Domain.Entities;
 using AirlineWeb.ViewModels.Flight;
 
-namespace AirlineWeb.Extensions;
+namespace AirlineWeb.Mappings;
 
 public static class FlightMappings
 {
@@ -11,8 +11,10 @@ public static class FlightMappings
         {
             ID = flight.ID,
             FlightNumber = flight.FlightNumber,
-            DepartureAirportID = flight.DepartureAirportID,
-            ArrivalAirportID = flight.ArrivalAirportID,
+            DepartureAirport =  $"Country: {flight.DepartureAirport.Country.CountryName} /" +
+                                $" City: {flight.DepartureAirport.City.CityName}",
+            ArrivalAirport = $"Country: {flight.ArrivalAirport.Country.CountryName} /" +
+                             $" City: {flight.ArrivalAirport.City.CityName}",
             DepartureTime = flight.DepartureTime,
             ArrivalTime = flight.ArrivalTime,
             Price = flight.Price

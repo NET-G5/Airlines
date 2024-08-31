@@ -30,6 +30,18 @@ public static class BookingMappings
             TotalPrice = booking.TotalPrice
         };
     }
+    public static UpdateBookingView ToUpdateView(this BookingView booking)
+    {
+        return new UpdateBookingView
+        {
+            ID = booking.ID,
+            UserID = booking.UserID,
+            FlightID = booking.FlightID,
+            BookingDate = booking.BookingDate,
+            SeatNumber = booking.SeatNumber,
+            TotalPrice = booking.TotalPrice
+        };
+    }
     public static Booking ToEntity(this CreateBookingView bookingView)
     {
         return new Booking

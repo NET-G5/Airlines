@@ -37,6 +37,20 @@ public class CommonRepository : ICommonRepository
     private IUserRoleRepository _userRoleRepository;
     public IUserRoleRepository UserRoles =>
         _userRoleRepository ??= new UserRoleRepository(_context);
+    
+    public CommonRepository(AirlineDbContext context)
+    {
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+
+        _airportRepository = new AirportRepository(context);
+        _bookingRepository = new BookingRepository(context);
+        _cityRepository = new CityRepository(context);
+        _countryRepository = new CountryRepository(context);
+        _flightRepository = new FlightRepository(context);
+        _roleRepository = new RoleRepository(context);
+        _userRepository = new UserRepository(context);
+        _userRoleRepository = new UserRoleRepository(context);
+    }
 
     public int SaveChanges() =>
         _context.SaveChanges();

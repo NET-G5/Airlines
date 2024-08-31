@@ -11,7 +11,7 @@ public class UserStore : IUserStore
 
     public UserStore(ICommonRepository repository)
     {
-        _repository = repository;
+        _repository = repository?? throw new ArgumentNullException(nameof(repository));
     }
     
     public List<UserView> GetAll(string? search)

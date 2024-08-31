@@ -1,4 +1,5 @@
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure;
 using AirlineWeb.Extensions;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.Booking;
@@ -7,11 +8,13 @@ namespace AirlineWeb.Stores;
 
 public class BookingStore : IBookingStore
 {
+    private AirlineDbContext _context;
     private readonly ICommonRepository _repository;
 
     public BookingStore(ICommonRepository repository)
     {
-        _repository = repository;
+        _context = new();
+        _repository = repository?? throw new ArgumentNullException(nameof(repository));
     }
     
     public List<BookingView> GetAll(string? search)
@@ -70,4 +73,23 @@ public class BookingStore : IBookingStore
         _repository.Bookings.Delete(id);
         _repository.SaveChanges();
     }
+    
+    // public List<Booking> ConvertFlight(List<Booking> booking)
+    // {
+    //     var flightIds = flights.Select(f => f.ID).ToList();
+    //
+    //     var allFlights = _context.Flights
+    //         .Where(f => flightIds.Contains(f.ID))
+    //         .Include(f => f.DepartureAirport)
+    //         .ThenInclude(a => a.Country)
+    //         .Include(f => f.ArrivalAirport)
+    //         .ThenInclude(a => a.Country)
+    //         .Include(f => f.DepartureAirport)
+    //         .ThenInclude(a => a.City)
+    //         .Include(f => f.ArrivalAirport)
+    //         .ThenInclude(a => a.City)
+    //         .ToList();
+    //
+    //     return allFlights;
+    // }
 }

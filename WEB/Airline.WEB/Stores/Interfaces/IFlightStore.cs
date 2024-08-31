@@ -5,7 +5,8 @@ namespace AirlineWeb.Stores.Interfaces;
 
 public interface IFlightStore
 {
-    List<FlightView> GetAll(string? search);
+    List<FlightView> GetAll(string where="", string to="",
+        string departure="", string numberOfAdults="");
     FlightView GetById(int id);
     UpdateFlightView GetForUpdate(int id);
     FlightView Create(UpdateFlightView flightView);
