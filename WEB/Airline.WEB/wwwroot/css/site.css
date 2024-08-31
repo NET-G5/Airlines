@@ -58,7 +58,8 @@
 
 
 footer {
-    background-color: #343a40; /* Темный фон футера */
+    background-color: white; /* Темный фон футера */
+    color: #605DEC;
 }
 
 footer h5 {
@@ -69,12 +70,16 @@ footer a {
     text-decoration: none;
 }
 
+.text-primary {
+    color: #605DEC !important;
+}
+
 footer a:hover {
     text-decoration: underline;
 }
 
 footer .text-muted {
-    color: #6c757d; /* Более светлый цвет текста для подложки */
+    color: #605DEC; /* Более светлый цвет текста для подложки */
 }
 
 footer .d-flex a {

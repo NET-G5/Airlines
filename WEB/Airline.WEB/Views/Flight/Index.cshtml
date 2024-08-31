@@ -6,7 +6,7 @@ ViewData["Title"] = "Flight List";
 }
 
 <!-- Background Section -->
-<div class="search-section bg-purple text-white py-5">
+<div class="search-section bg-purple text-white py-1">
     <!-- Main Heading -->
     <div class="text-center mt-5" style="color: #000;">
         <h1 class="display-4 font-weight-bold">Find Your Perfect Flight</h1>
@@ -17,20 +17,23 @@ ViewData["Title"] = "Flight List";
     <!-- Search Form -->
     <div class="mt-5">
         <form method="get" asp-action="Index" class="row g-3 justify-content-center">
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="fromWhere" name="where" value="@ViewBag.where" placeholder="From where?" aria-label="Departure location">
+            <div class="col-md-3 position-relative">
+                <i class="fa-solid fa-plane-departure position-absolute top-50 start-0 translate-middle-y ms-2"></i>
+                <input type="text" class="form-control ps-5" id="fromWhere" name="where" value="@ViewBag.where" placeholder="From where?" aria-label="Departure location">
             </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="toWhere" name="to" value="@ViewBag.to" placeholder="Where to?" aria-label="Destination location">
+            <div class="col-md-3 position-relative">
+                <i class="fa-solid fa-plane-arrival position-absolute top-50 start-0 translate-middle-y ms-2"></i>
+                <input type="text" class="form-control ps-5" id="toWhere" name="to" value="@ViewBag.to" placeholder="Where to?" aria-label="Destination location">
             </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="departureReturn" name="departure" value="@ViewBag.departure" placeholder="Depart - Return" aria-label="Departure and return dates">
+            <div class="col-md-3 position-relative">
+                <i class="fa-solid fa-calendar-days position-absolute top-50 start-0 translate-middle-y ms-2"></i>
+                <input type="text" class="form-control ps-5" id="departureReturn" name="departure" value="@ViewBag.departure" placeholder="Depart - Return" aria-label="Departure and return dates">
             </div>
             <div class="col-md-2">
                 <input type="number" class="form-control" id="numberOfAdults" name="numberOfAdults" value="@ViewBag.numberOfAdults" min="1" max="10" aria-label="Number of adults">
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-light w-100">Search</button>
+                <button type="submit" class="btn btn-light w-100" style="background: #605DEC; color: white">Search</button>
             </div>
         </form>
     </div>
