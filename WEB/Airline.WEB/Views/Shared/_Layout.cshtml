@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - AirlineWeb</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css"/>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         /* Общие стили */
         body {
-            background-color: #f0f0f0; /* Светлый фон для страницы */
+            background-color: white;
             font-family: 'Montserrat', sans-serif;
         }
 
         /* Стили навигационной панели */
         .navbar {
-            background-color: #6a1b9a; /* Тёмно-фиолетовый цвет */
+            background-color: #605DEC; 
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень для глубины */
         }
 
@@ -41,7 +44,7 @@
 
         /* Стили футера */
         footer {
-            background-color: #6a1b9a; /* Тёмно-фиолетовый цвет */
+            background-color: #605DEC;
             color: #ffffff; /* Белый текст */
             padding: 1rem 0; /* Отступы сверху и снизу */
             text-align: center; /* Выравнивание по центру */
@@ -76,8 +79,8 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown" style="margin-left: 30px">
+            <ul class="navbar-nav mr-20px">
                 <li class="nav-item active">
                     <a class="nav-link" href="@Url.Action("Index", "Flight")">Flights <span class="sr-only">(current)</span></a>
                 </li>
@@ -85,7 +88,7 @@
                     <a class="nav-link" href="@Url.Action("Index", "Booking")">Bookings</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto" style="margin-left: 20px;">
+            <ul class="navbar-nav ms-auto" style="margin-right: 20px;">
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Profile", "User")">
                         <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fru%2Fsearch%2Ffranklin&psig=AOvVaw2ewzH2lonnNuxYe5TPE4Nm&ust=1725195284518000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKCo-cqjn4gDFQAAAAAdAAAAABAE" alt="Profile" class="rounded-circle" width="30" height="30"/>
@@ -95,56 +98,70 @@
                     <a class="nav-link" href="@Url.Action("Logout", "Account")">Logout</a>
                 </li>
             </ul>
-
         </div>
     </nav>
 </header>
 <main role="main" class="container mt-4">
     @RenderBody()
 </main>
-<footer class="bg-dark text-light py-4 mt-5">
+<footer class="bg-white text-dark py-2 mt-5">
     <div class="container">
         <div class="row">
             <!-- Logo and Description -->
             <div class="col-md-4 mb-3">
-                <h5 class="text-white">AirlineWeb</h5>
+                <h5 class="text-dark">AirlineWeb</h5>
                 <p class="text-muted">Find and book your perfect flight with ease. Experience seamless travel with our user-friendly platform.</p>
             </div>
             <!-- Links Section -->
             <div class="col-md-4 mb-3">
                 <h5>Quick Links</h5>
                 <ul class="list-unstyled">
-                    <li><a href="@Url.Action("Index", "Flight")" class="text-light">Flights</a></li>
-                    <li><a href="@Url.Action("Index", "Booking")" class="text-light">Bookings</a></li>
-                    <li><a href="@Url.Action("Profile", "User")" class="text-light">Profile</a></li>
+                    <li><a href="@Url.Action("Index", "Flight")" class="text-dark">Flights</a></li>
+                    <li><a href="@Url.Action("Index", "Booking")" class="text-dark">Bookings</a></li>
+                    <li><a href="@Url.Action("Profile", "User")" class="text-dark">Profile</a></li>
                 </ul>
             </div>
             <!-- Social Media Links -->
             <div class="col-md-4 mb-3 text-center">
                 <h5>Follow Us</h5>
                 <div class="d-flex justify-content-center">
-                    <a href="https://t.me/Maxamatxanov" class="text-light me-3" target="_blank" aria-label="Telegram">
+                    <a href="https://t.me/Maxamatxanov" class="text-dark me-3" target="_blank" aria-label="Telegram">
                         <i class="fab fa-telegram fa-sm"></i>
                     </a>
-                    <a href="https://twitter.com/BegzhanM15171" class="text-light me-3" target="_blank" aria-label="Twitter">
+                    <a href="https://twitter.com/BegzhanM15171" class="text-dark me-3" target="_blank" aria-label="Twitter">
                         <i class="fab fa-twitter fa-sm"></i>
                     </a>
-                    <a href="https://www.instagram.com/begzhan_maxamatxanov" class="text-light me-3" target="_blank" aria-label="Instagram">
+                    <a href="https://www.instagram.com/begzhan_maxamatxanov" class="text-dark me-3" target="_blank" aria-label="Instagram">
                         <i class="fab fa-instagram fa-sm"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/begzhan-maxamatxanov-0287a4316/" class="text-light" target="_blank" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/in/begzhan-maxamatxanov-0287a4316/" class="text-dark" target="_blank" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in fa-sm"></i>
                     </a>
                 </div>
             </div>
         </div>
         <div class="text-center mt-4">
-            <p class="mb-0">&copy; 2024 AirlineWeb | <a href="#" class="text-light">Privacy Policy</a> | <a href="#" class="text-light">Terms of Service</a></p>
+            <p class="mb-0">&copy; 2024 AirlineWeb | <a href="#" class="text-dark">Privacy Policy</a> | <a href="#" class="text-dark">Terms of Service</a></p>
         </div>
     </div>
 </footer>
+
+
 <!-- Bootstrap Bundle JS (включает Popper.js) -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+    // Initialize the datepicker with range selection
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#departureReturn').datepicker({
+            format: 'mm/dd/yyyy',
+            startDate: new Date(),
+            multidate: true,
+            multidateSeparator: " - ",
+            todayHighlight: true
+        });
+    });
+</script>
 <!-- Syncfusion JS -->
 <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
 @await RenderSectionAsync("Scripts", required: false)
