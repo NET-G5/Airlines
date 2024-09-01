@@ -2,38 +2,40 @@
 @model AirlineWeb.ViewModels.Flight.FlightView
 
 @{
-ViewData["Title"] = "Flight Details";
+    ViewData["Title"] = "Flight Details";
 }
 
 <!-- Background Section -->
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Flight Details</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Card with shadow for a modern look -->
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center" style="background-color: #605DEC !important;">
+                <h2 class="mb-0" style="background: #605DEC">Flight Details</h2>
+                </div>
+                <div class="card-body p-4">
+                    <dl class="row mb-4">
+                        <dt class="col-sm-4 font-weight-bold">Departure Airport:</dt>
+                        <dd class="col-sm-8">@Model.DepartureAirportCountry<br>@Model.DepartureAirportCity</dd>
+                        
+                        <dt class="col-sm-4 font-weight-bold">Arrival Airport:</dt>
+                        <dd class="col-sm-8">@Model.ArrivalAirportCountry<br>@Model.ArrivalAirportCity</dd>
 
-    <!-- Flight Details -->
-    <div class="card">
-        <div class="card-header">
-            <h3>@Model.DepartureAirport - @Model.ArrivalAirport</h3>
-        </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Departure Airport</dt>
-                <dd class="col-sm-9">@Model.DepartureAirport</dd>
+                        <dt class="col-sm-4 font-weight-bold">Departure Time:</dt>
+                        <dd class="col-sm-8">@Model.DepartureTime.ToString("dd MMM yyyy HH:mm")</dd>
 
-                <dt class="col-sm-3">Arrival Airport</dt>
-                <dd class="col-sm-9">@Model.ArrivalAirport</dd>
+                        <dt class="col-sm-4 font-weight-bold">Arrival Time:</dt>
+                        <dd class="col-sm-8">@Model.ArrivalTime.ToString("dd MMM yyyy HH:mm")</dd>
 
-                <dt class="col-sm-3">Departure Time</dt>
-                <dd class="col-sm-9">@Model.DepartureTime.ToString("dd MMM yyyy HH:mm")</dd>
-
-                <dt class="col-sm-3">Arrival Time</dt>
-                <dd class="col-sm-9">@Model.ArrivalTime.ToString("dd MMM yyyy HH:mm")</dd>
-
-                <dt class="col-sm-3">Price</dt>
-                <dd class="col-sm-9">@Model.Price.ToString("C")</dd>
-            </dl>
-        </div>
-        <div class="card-footer text-center">
-           <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+                        <dt class="col-sm-4 font-weight-bold">Price:</dt>
+                        <dd class="col-sm-8">@Model.Price.ToString("C")</dd>
+                    </dl>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <a class="btn btn-secondary btn-lg" style="background-color: #1c1f23" asp-action="Index">Cancel</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

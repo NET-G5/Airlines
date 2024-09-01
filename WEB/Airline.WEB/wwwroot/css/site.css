@@ -1,4 +1,7 @@
 /* site.css */
+.bg-primary{
+    background-color: #6f42c1;
+}
 
 /* Background Section */
 .search-section {
@@ -85,4 +88,5 @@ footer .text-muted {
 footer .d-flex a {
     font-size: 1.5rem;
 }
+
 

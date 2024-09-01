@@ -58,10 +58,10 @@ ViewData["Title"] = "Flight List";
             @foreach (var flight in Model)
             {
             <tr>
-                <td>@flight.DepartureAirport</td>
-                <td>@flight.ArrivalAirport</td>
-                <td>@flight.DepartureTime.ToString("dd MMM yyyy HH:mm")</td>
-                <td>@flight.ArrivalTime.ToString("dd MMM yyyy HH:mm")</td>
+                <td>@flight.DepartureAirportCountry<br>@flight.DepartureAirportCity</td>
+                <td>@flight.ArrivalAirportCountry<br>@flight.ArrivalAirportCity</td>
+                <td>@flight.DepartureTime.ToString("dd MMM yyyy")</td>
+                <td>@flight.ArrivalTime.ToString("dd MMM yyyy")</td>
                 <td>@flight.Price.ToString("C")</td>
                 <td>
                     <a class="fa-solid fa-info icon-large" asp-action="Details" asp-route-id="@flight.ID"></a>

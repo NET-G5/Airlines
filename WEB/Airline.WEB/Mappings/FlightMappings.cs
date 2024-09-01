@@ -11,10 +11,10 @@ public static class FlightMappings
         {
             ID = flight.ID,
             FlightNumber = flight.FlightNumber,
-            DepartureAirport =  $"Country: {flight.DepartureAirport.Country.CountryName} /" +
-                                $" City: {flight.DepartureAirport.City.CityName}",
-            ArrivalAirport = $"Country: {flight.ArrivalAirport.Country.CountryName} /" +
-                             $" City: {flight.ArrivalAirport.City.CityName}",
+            DepartureAirportCountry =  $"Country: {flight.DepartureAirport.Country.CountryName}",
+            DepartureAirportCity =  $"City: {flight.DepartureAirport.City.CityName}",
+            ArrivalAirportCountry = $"Country: {flight.ArrivalAirport.Country.CountryName}",
+            ArrivalAirportCity = $"City: {flight.ArrivalAirport.City.CityName}",
             DepartureTime = flight.DepartureTime,
             ArrivalTime = flight.ArrivalTime,
             Price = flight.Price
