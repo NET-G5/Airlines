@@ -2,7 +2,7 @@
 @model IEnumerable<AirlineWeb.ViewModels.Flight.FlightView>
 
 @{
-ViewData["Title"] = "Flight List";
+ViewData["Title"] = "Flight";
 }
 
 <!-- Background Section -->
@@ -18,18 +18,19 @@ ViewData["Title"] = "Flight List";
     <div class="mt-5">
         <form method="get" asp-action="Index" class="row g-3 justify-content-center">
             <div class="col-md-3 position-relative">
-                <i class="fa-solid fa-plane-departure position-absolute top-50 start-0 translate-middle-y ms-2"></i>
+                <i class="fa-solid fa-plane-departure position-absolute top-50 start-0 translate-middle-y ms-4" style="color: #6f42c1;"></i>
                 <input type="text" class="form-control ps-5" id="fromWhere" name="where" value="@ViewBag.where" placeholder="From where?" aria-label="Departure location">
             </div>
             <div class="col-md-3 position-relative">
-                <i class="fa-solid fa-plane-arrival position-absolute top-50 start-0 translate-middle-y ms-2"></i>
+                <i class="fa-solid fa-plane-arrival position-absolute top-50 start-0 translate-middle-y ms-4" style="color: #6f42c1;"></i>
                 <input type="text" class="form-control ps-5" id="toWhere" name="to" value="@ViewBag.to" placeholder="Where to?" aria-label="Destination location">
             </div>
             <div class="col-md-3 position-relative">
-                <i class="fa-solid fa-calendar-days position-absolute top-50 start-0 translate-middle-y ms-2"></i>
+                <i class="fa-solid fa-calendar-days position-absolute top-50 start-0 translate-middle-y ms-4" style="color: #6f42c1; background-color: white;"></i>
                 <input type="text" class="form-control ps-5" id="departureReturn" name="departure" value="@ViewBag.departure" placeholder="Depart - Return" aria-label="Departure and return dates">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 position-relative">
+                <i class="fa-solid fa-user position-absolute top-50 start-0 translate-middle-y ms-4" style="color: #6f42c1;"></i>
                 <input type="number" class="form-control" id="numberOfAdults" name="numberOfAdults" value="@ViewBag.numberOfAdults" min="1" max="10" aria-label="Number of adults">
             </div>
             <div class="col-md-2">

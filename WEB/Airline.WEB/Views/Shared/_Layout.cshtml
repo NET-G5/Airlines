@@ -8,20 +8,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/brands.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css"/>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         /* Общие стили */
         body {
             background-color: white;
-            background-image: url('data:Airline.WEB/wwwroot/Screenshot 2024-09-01 at 19.08.20.png');
+            background-size: cover; /* Или используйте 'contain', если хотите, чтобы изображение полностью умещалось в видимой области */
+            background-repeat: no-repeat; /* Чтобы изображение не повторялось */
+            background-position: center; /* Центрирование изображения */
             font-family: 'Montserrat', sans-serif;
         }
+
 
         /* Стили навигационной панели */
         .navbar {
             background-color: #605DEC; 
+            height: 80px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень для глубины */
         }
 
@@ -74,8 +84,8 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/" style="margin-left: 20px;">
-            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fskift.com%2F2013%2F10%2F23%2Fthe-30-best-looking-airlines-logos-in-the-world%2F&psig=AOvVaw0-66rxdkGM-mhlhLx6hFab&ust=1725195148950000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPCWjp6jn4gDFQAAAAAdAAAAABAE" alt="AirlineWeb Logo" width="auto" height="auto" class="d-inline-block align-text-top">
+        <a class="navbar-brand" href="/" style="margin-left: 20px; ">
+            <img src="/images/images-2-removebg-preview.png" width="150" height="auto" class="d-inline-block align-text-top">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -92,11 +102,11 @@
             <ul class="navbar-nav ms-auto" style="margin-right: 20px;">
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Profile", "User")">
-                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fru%2Fsearch%2Ffranklin&psig=AOvVaw2ewzH2lonnNuxYe5TPE4Nm&ust=1725195284518000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKCo-cqjn4gDFQAAAAAdAAAAABAE" alt="Profile" class="rounded-circle" width="30" height="30"/>
+                        <img src="/images/benjamin-franklin-cut-on-new-260nw-2031485351.webp" alt="Profile" class="rounded-circle" width="35" height="30"/>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Logout", "Account")">Logout</a>
+                    <a class="nav-link" href="@Url.Action("Logout", "Account")">Logout <i class="fa-solid fa-right-from-bracket"></i>  </a>
                 </li>
             </ul>
         </div>
@@ -165,6 +175,23 @@
 </script>
 <!-- Syncfusion JS -->
 <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#departureReturn').datepicker({
+            format: 'mm/dd/yyyy',
+            autoclose: true
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr("#departureReturn", {
+            dateFormat: "m/d/Y",
+            mode: "range"
+        });
+    });
+</script>
+
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
