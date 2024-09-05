@@ -35,6 +35,39 @@ namespace AirlineWeb.Controllers
 
             return View(booking);
         }
+        
+        // GET: /Controller/Delete/5
+        public IActionResult Delete(int id)
+        {
+            var userId = GetUserId();
+            var booking = _bookingStore.GetById(id);
+
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            return View(booking);
+        }
+
+        // POST: /Controller/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var userId = GetUserId();
+            var booking = _bookingStore.GetById(id);
+
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            _bookingStore.Delete(booking.UserID);
+
+            return RedirectToAction("Index");
+        }
+
 
         public IActionResult Add()
         {

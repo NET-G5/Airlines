@@ -89,7 +89,6 @@ namespace AirlineWeb.Controllers
         private User ConvertUser(int userID)
         {
             var user = _context.Users
-                .Include(u => u.UserRoles)
                 .Include(u => u.Bookings)
                 .ThenInclude(b => b.Flight)
                 .ThenInclude(f => f.ArrivalAirport)
