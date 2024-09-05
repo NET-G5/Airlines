@@ -1,18 +1,23 @@
+using Airline.Domain.Entities;
+using Airline.Infrastructure;
 using AirlineWeb.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.User;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Controllers
 {
     public class UserController : Controller
     {
         int userID = 1;
+        private readonly AirlineDbContext _context;
         private readonly IUserStore _userStore;
         private readonly IBookingStore _bookingStore;
 
         public UserController(IUserStore userStore, IBookingStore bookingStore)
         {
+            _context = new();
             _userStore = userStore;
             _bookingStore = bookingStore;
         }
@@ -21,21 +26,14 @@ namespace AirlineWeb.Controllers
         public IActionResult Profile()
         {
             var userId = userID; // Assume you have an extension method to get user ID
-            var user = _userStore.GetById(userId);
-            var bookings = _bookingStore.GetById(userId);
+            var user = ConvertUser(userId);
             
             if (user == null)
             {
                 return NotFound();
             }
 
-            var viewModel = new UserView
-            {
-                ID = user.ID,
-                Username = user.Username,
-                Email = user.Email,
-                PasswordHash = user.PasswordHash // Be cautious with this field; usually, we don't display it
-            };
+            var viewModel = user.ToView();
 
             return View(viewModel);
         }
@@ -55,7 +53,6 @@ namespace AirlineWeb.Controllers
                 ID = user.ID,
                 Username = user.Username,
                 Email = user.Email,
-                PasswordHash = user.PasswordHash // Be cautious with this field; usually, we don't display it
             };
 
             return View(viewModel);
@@ -87,6 +84,23 @@ namespace AirlineWeb.Controllers
                 return RedirectToAction(nameof(Profile));
             }
             return View(model);
+        }
+
+        private User ConvertUser(int userID)
+        {
+            var user = _context.Users
+                .Include(u => u.UserRoles)
+                .Include(u => u.Bookings)
+                .ThenInclude(b => b.Flight)
+                .ThenInclude(f => f.ArrivalAirport)
+                .ThenInclude(a => a.City)
+                .Include(u => u.Bookings)
+                .ThenInclude(b => b.Flight)
+                .ThenInclude(f => f.DepartureAirport)
+                .ThenInclude(a => a.City)
+                .FirstOrDefault(u => u.ID == userID);
+
+            return user;
         }
     }
 }

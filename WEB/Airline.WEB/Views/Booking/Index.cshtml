@@ -1,27 +1,45 @@
 @model AirlineWeb.ViewModels.Booking.BookingView
 
-<h2>Your Bookings</h2>
+<h2 class="text-center my-4">Your Bookings</h2>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Booking Date</th>
-        <th>Seat Number</th>
-        <th>Total Price</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-            <td>@Model.BookingDate.ToShortDateString()</td>
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered align-middle">
+        <thead class="table text-center" style="color: white; background-color: #605DEC">
+        <tr>
+            <th>Booking Date</th>
+            <th>Seat Number</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center">
+            <td>@Model.BookingDate.ToString("dd MMM yyyy HH:mm")</td>
             <td>@Model.SeatNumber</td>
             <td>@Model.TotalPrice.ToString("C")</td>
             <td>
-                <a asp-action="Details" asp-route-id="@Model.ID" class="btn btn-info">Details</a>
-                <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">Edit</a>
-                <a asp-action="Delete" asp-route-id="@Model.ID" class="btn btn-danger">Delete</a>
+                <a asp-action="Details" asp-route-id="@Model.ID" class="btn btn-sm mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details">
+                    <i class="fa-solid fa-info icon-large" style="color: #605DEC;"></i> <!-- Цвет иконки -->
+                </a>
+                <a asp-action="Delete" asp-route-id="@Model.ID" class="btn btn-sm mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Booking">
+                    <i class="fa-solid fa-trash" style="color: #dc3545;"></i> <!-- Цвет иконки -->
+                </a>
             </td>
-    }
-    </tbody>
-</table>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-<a asp-action="Create" class="btn btn-primary">Create New Booking</a>
+<div class="text-center my-4">
+    <a asp-action="Add" class="btn btn-success btn-lg">
+        <i class="fa-solid fa-plus me-2"></i> New Booking
+    </a>
+</div>
+
+<script>
+    // Инициализация всплывающих подсказок для иконок
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+</script>
