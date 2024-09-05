@@ -1,7 +1,5 @@
 using Airline.Domain.Entities;
-using AirlineWeb.ViewModels.Airport;
 using AirlineWeb.ViewModels.User;
-using AirlineWeb.ViewModels.UserRole;
 
 namespace AirlineWeb.Extensions;
 
@@ -13,8 +11,8 @@ public static class UserMappings
         {
             ID = user.ID,
             Username = user.Username,
-            PasswordHash = user.PasswordHash,
-            Email = user.Email
+            Email = user.Email,
+            // DepartureAirport = user.Bookings.
         };
     }
     
@@ -24,7 +22,6 @@ public static class UserMappings
         {
             ID = userView.ID,
             Username = userView.Username,
-            PasswordHash = userView.PasswordHash,
             Email = userView.Email
         };
     }

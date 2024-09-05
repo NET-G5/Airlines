@@ -1,13 +1,21 @@
 @model AirlineWeb.ViewModels.Booking.BookingView
 
-<h2>Booking Details</h2>
+<div class="container">
+    <h2 class="text-center my-4">Booking Details</h2>
 
-<div>
-    <h4>Flight Number: @Model.FlightID</h4>
-    <p>Booking Date: @Model.BookingDate.ToShortDateString()</p>
-    <p>Seat Number: @Model.SeatNumber</p>
-    <p>Total Price: @Model.TotalPrice.ToString("C")</p>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card p-4 shadow-sm">
+                <div class="card-body">
+                    <p><strong>Booking Date:</strong> @Model.BookingDate.ToString("dd MMM yyyy HH:mm")</p>
+                    <p><strong>Seat Number:</strong> @Model.SeatNumber</p>
+                    <p><strong>Total Price:</strong> @Model.TotalPrice.ToString("C")</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a asp-action="Index" class="btn btn-secondary btn-lg mx-2" style="background-color: #1c1f23">Cancel</a>
+            </div>
+        </div>
+    </div>
 </div>
-
-<a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">Edit</a>
-<a asp-action="Index" class="btn btn-secondary">Back to List</a>

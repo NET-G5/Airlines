@@ -11,7 +11,6 @@ public static class BookingMappings
         {
             ID = booking.ID,
             UserID = booking.UserID,
-            FlightID = booking.FlightID,
             BookingDate = booking.BookingDate,
             SeatNumber = booking.SeatNumber,
             TotalPrice = booking.TotalPrice
