@@ -15,7 +15,7 @@ namespace AirlineWeb.Controllers
         private readonly IUserStore _userStore;
         private readonly IBookingStore _bookingStore;
 
-        public UserController(IUserStore userStore, IBookingStore bookingStore)
+        public UserController(IUserStore userStore, IBookingStore bookingStore, AirlineDbContext context)
         {
             _context = new();
             _userStore = userStore;
@@ -25,18 +25,29 @@ namespace AirlineWeb.Controllers
         // GET: /User/Profile
         public IActionResult Profile()
         {
-            var userId = userID; // Assume you have an extension method to get user ID
-            var user = ConvertUser(userId);
-            
+            if (userID == null)
+            {
+                return Unauthorized(); 
+            }
+
+            var user = ConvertUser(userID);
+
             if (user == null)
             {
                 return NotFound();
             }
 
-            var viewModel = user.ToView();
+            var bookingsWithID = _bookingStore
+                .GetAll("")
+                .Where(b => b.ID == userID)
+                .ToList();
 
-            return View(viewModel);
+            ViewBag.Bookings = bookingsWithID;
+
+            var userView = user.ToView();
+            return View(userView);
         }
+
 
         // GET: /User/Edit/5
         public IActionResult Edit(int id)
@@ -92,7 +103,15 @@ namespace AirlineWeb.Controllers
                 .Include(u => u.Bookings)
                 .ThenInclude(b => b.Flight)
                 .ThenInclude(f => f.ArrivalAirport)
+                .ThenInclude(a => a.Country)
+                .Include(u => u.Bookings)
+                .ThenInclude(b => b.Flight)
+                .ThenInclude(f => f.ArrivalAirport)
                 .ThenInclude(a => a.City)
+                .Include(u => u.Bookings)
+                .ThenInclude(b => b.Flight)
+                .ThenInclude(f => f.ArrivalAirport)
+                .ThenInclude(a => a.Country)
                 .Include(u => u.Bookings)
                 .ThenInclude(b => b.Flight)
                 .ThenInclude(f => f.DepartureAirport)

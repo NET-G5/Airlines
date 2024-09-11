@@ -1,3 +1,4 @@
+using Airline.Domain.Entities;
 using AirlineWeb.ViewModels.User;
 
 namespace AirlineWeb.Stores.Interfaces;
@@ -10,4 +11,6 @@ public interface IUserStore
     UserView Create(CreateUserView userView);
     void Update(UpdateUserView userView);
     void Delete(int id);
+
+    void AddFlightToUser(int userId, int flightId);
 }

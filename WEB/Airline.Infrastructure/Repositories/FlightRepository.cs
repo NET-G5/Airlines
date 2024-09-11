@@ -6,13 +6,18 @@ namespace Airline.Infrastructure.Repositories;
 
 public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
 {
-    public FlightRepository(AirlineDbContext context) : base(context) { }
+    protected readonly AirlineDbContext _context;
+
+    public FlightRepository(AirlineDbContext context) : base(context)
+    {
+        this._context = new();
+    }
 
     public List<Flight> GetAll(string where = "", string to = "", string departure = "", string numberOfAdults = "")
     {
-        using var context = new AirlineDbContext();
-
-        var query = context.Flights.AsQueryable();
+        using var _context = new AirlineDbContext();
+        
+        var query = _context.Flights.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(where))
         {
@@ -28,11 +33,12 @@ public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
             query = query.Where(x => EF.Functions.Like(x.ArrivalAirport.City.CityName, pattern));
         }
 
+        string format = "dd/MM/yyyy";
         if (!string.IsNullOrWhiteSpace(departure))
         {
-            if (DateTime.TryParse(departure, out DateTime departureDate))
+            if (DateTime.TryParseExact(departure, format, null, System.Globalization.DateTimeStyles.None, out DateTime dateTime))
             {
-                query = query.Where(x => x.DepartureTime.Date == departureDate.Date);
+                query = query.Where(x => x.DepartureTime.Date == dateTime.Date);
             }
         }
 
@@ -53,7 +59,7 @@ public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
     {
         var flightIds = flights.Select(f => f.ID).ToList();
 
-        var allFlights = _context.Flights
+        var allFlights = base._context.Flights
             .Where(f => flightIds.Contains(f.ID))
             .Include(f => f.DepartureAirport)
             .ThenInclude(a => a.Country)

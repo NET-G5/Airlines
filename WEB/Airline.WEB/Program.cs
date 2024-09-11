@@ -15,7 +15,7 @@ builder.Services.AddControllersWithViews();
 // Register Syncfusion license
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXdccnRSRWJeWER0VkI=");
 
-// Configure database context
+// Configure database _context
 builder.Services.AddDbContext<AirlineDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString(ConfigurationDefaults.ConectionString)));
 

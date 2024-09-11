@@ -1,29 +1,59 @@
 @model AirlineWeb.ViewModels.User.UpdateUserView
 
 @{
-ViewData["Title"] = "Edit User Profile";
+ViewData["Title"] = "Edit Your Profile";
 }
 
-<h1>Edit User Profile</h1>
+<h1 class="text-center">Edit Your Profile</h1>
+<p class="text-center">Update your profile information below. Make sure to save your changes.</p>
 
 <form asp-action="Edit" method="post">
-    <div class="form-group">
-        <label asp-for="Username" class="control-label"></label>
-        <input asp-for="Username" class="form-control" />
-        <span asp-validation-for="Username" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="PasswordHash" class="control-label"></label>
-        <input asp-for="PasswordHash" type="password" class="form-control" />
-        <span asp-validation-for="PasswordHash" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="@Url.Action("Profile", "User")" class="btn btn-secondary">Cancel</a>
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="form-group">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" aria-describedby="usernameHelp" />
+                    <small id="usernameHelp" class="form-text text-muted">Your username must be unique.</small>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" aria-describedby="emailHelp" />
+                    <small id="emailHelp" class="form-text text-muted">We will never share your email with anyone else.</small>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PasswordHash" class="control-label"></label>
+                    <input asp-for="PasswordHash" type="password" class="form-control" aria-describedby="passwordHelp" />
+                    <small id="passwordHelp" class="form-text text-muted">Leave this blank if you do not want to change your password.</small>
+                    <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                </div>
+
+                <div class="text-center" style="margin: 10px ;">
+                    <button type="submit" class="btn btn-primary btn-lg btn-custom">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <a href="@Url.Action("Profile", "User")" class="btn btn-primary btn-lg btn-custom" style="background-color: #1c1f23">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
+
+<style>
+    .btn-custom {
+        background-color: #605DEC;  /* White background for both */
+        border-color: #fff;   /* Border color for both buttons */
+        color: #fff;          /* Text color */
+    }
+
+    .btn-custom:hover {
+        background-color: #605DEC;  /* Slightly darker on hover */
+    }
+</style>

@@ -1,10 +1,10 @@
 using Airline.Domain.Entities;
 using Airline.Domain.Interfaces;
 using Airline.Infrastructure;
-using AirlineWeb.Extensions;
 using AirlineWeb.Mappings;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.Flight;
+using AirlineWeb.ViewModels.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,19 +13,19 @@ namespace AirlineWeb.Controllers
     public class FlightController : Controller
     {
         private readonly AirlineDbContext _context;
-        private readonly ICommonRepository _commonRepository;
+        private readonly IUserStore _userStore;
         private readonly IFlightStore _flightStore;
 
         public FlightController(ICommonRepository commonRepository, 
-            IFlightStore flightStore, AirlineDbContext context)
+            IFlightStore flightStore, AirlineDbContext context, IUserStore userStore)
         {
             _context = new();
-            _commonRepository = commonRepository;
+            _userStore = userStore;
             _flightStore = flightStore;
         }
 
         // GET: /Flight/
-        public IActionResult Index(string where = "", string to = "", string departure = "", string numberOfAdults = "")
+        public IActionResult Index(string where = "", string to = "", string departure = "", string numberOfAdults=null)
         {
             var flights = _flightStore.GetAll(where, to, departure, numberOfAdults);
 
@@ -116,6 +116,15 @@ namespace AirlineWeb.Controllers
         {
             _flightStore.Delete(id);
             return RedirectToAction(nameof(Index));
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Buy(int userId, int flightId)
+        {
+            _userStore.AddFlightToUser(1, flightId);
+            
+            return View();
         }
         
         private Flight ConvertFlight(int id)

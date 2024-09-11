@@ -13,7 +13,11 @@ public static class BookingMappings
             UserID = booking.UserID,
             BookingDate = booking.BookingDate,
             SeatNumber = booking.SeatNumber,
-            TotalPrice = booking.TotalPrice
+            TotalPrice = booking.TotalPrice,
+            DepartureAirportCountry = booking.Flight.DepartureAirport.Country.CountryName,
+            DepartureAirportCity = booking.Flight.DepartureAirport.City.CityName,
+            ArrivalAirportCountry = booking.Flight.ArrivalAirport.Country.CountryName,
+            ArrivalAirportCity = booking.Flight.ArrivalAirport.City.CityName,
         };
     }
     
