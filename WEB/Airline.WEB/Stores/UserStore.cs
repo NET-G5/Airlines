@@ -1,7 +1,10 @@
+using Airline.Domain.Entities;
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure;
 using AirlineWeb.Extensions;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.User;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Stores;
 
@@ -62,7 +65,47 @@ public class UserStore : IUserStore
         _repository.Users.Update(entity);
         _repository.SaveChanges();
     }
+    
+    public void AddFlightToUser(int userId, int flightId)
+    {
+        using (var context = new AirlineDbContext())
+        {
+            // Найти пользователя по идентификатору
+            var user = context.Users
+                .Include(u => u.Bookings) // Подгружаем бронирования пользователя
+                .FirstOrDefault(u => u.ID == userId);
 
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            var flight = context.Flights
+                .FirstOrDefault(f => f.ID == flightId);
+
+            if (flight == null)
+            {
+                throw new Exception("Flight not found");
+            }
+
+            var booking = new Booking
+            {
+                UserID = userId,
+                FlightID = flightId,
+                BookingDate = DateTime.Now,
+                SeatNumber = "711Ob",
+                TotalPrice = flight.Price
+            };
+
+            // Добавить бронирование в контекст данных
+            context.Bookings.Add(booking);
+
+            // Сохранить изменения в базе данных
+            context.SaveChangesAsync();
+        }
+    }
+
+    
     public void Delete(int id)
     {
         _repository.Users.Delete(id);

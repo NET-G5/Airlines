@@ -31,7 +31,7 @@ public static class DatabaseInitializer
     {
         if (context.Countries.Any()) return;
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
             var country = new Country
             {
@@ -49,7 +49,7 @@ public static class DatabaseInitializer
         if (context.Cities.Any()) return;
 
         var countries = context.Countries.ToList(); // Получаем список стран для связи
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 200; i++)
         {
             var city = new City
             {
@@ -69,7 +69,7 @@ public static class DatabaseInitializer
 
         var cities = context.Cities.ToList(); // Получаем список городов для связи
         var countries = context.Countries.ToList(); // Получаем список стран для связи
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
             var airport = new Airport
             {
@@ -89,7 +89,7 @@ public static class DatabaseInitializer
         if (context.Flights.Any()) return;
 
         var airports = context.Airports.ToList(); // Получаем список аэропортов для связи
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
             var departureAirport = _faker.PickRandom(airports);
             var arrivalAirport = _faker.PickRandom(airports);
@@ -114,7 +114,7 @@ public static class DatabaseInitializer
     {
         if (context.Users.Any()) return;
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 200; i++)
         {
             var user = new User
             {
@@ -157,7 +157,7 @@ public static class DatabaseInitializer
 
         var uniqueUserRoles = new HashSet<(int UserID, int RoleID)>();
 
-        while (uniqueUserRoles.Count < 20)
+        while (uniqueUserRoles.Count < 200)
         {
             var userID = _faker.PickRandom(users).ID;
             var roleID = _faker.PickRandom(roles).ID;
@@ -189,7 +189,7 @@ public static class DatabaseInitializer
         var users = context.Users.ToList(); // Получаем список пользователей для связи
         var flights = context.Flights.ToList(); // Получаем список рейсов для связи
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 200; i++)
         {
             var booking = new Booking
             {

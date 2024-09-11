@@ -1,6 +1,8 @@
+using Airline.Domain.Entities;
 using Airline.Infrastructure;
 using AirlineWeb.Stores.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Controllers
 {
@@ -8,10 +10,12 @@ namespace AirlineWeb.Controllers
     {
         private readonly AirlineDbContext _context;
         private readonly IBookingStore _bookingStore;
+        private readonly IUserStore _userStore;
 
-        public BookingController(AirlineDbContext context, IBookingStore bookingStore)
+        public BookingController(AirlineDbContext context, IBookingStore bookingStore, IUserStore userStore)
         {
             _context = new();
+            _userStore = userStore;
             _bookingStore = bookingStore;
         }
 
@@ -63,20 +67,40 @@ namespace AirlineWeb.Controllers
                 return NotFound();
             }
 
-            _bookingStore.Delete(booking.UserID);
+            if (booking.UserID != userId)
+            {
+                return Unauthorized(); 
+            }
+
+            _bookingStore.Delete(booking.UserID); // Убедитесь, что используете правильный идентификатор
 
             return RedirectToAction("Index");
         }
-
-
-        public IActionResult Add()
-        {
-            return RedirectToAction("Index", "Flight");
-        }
+        
         // Новый метод для получения UserID
         private int GetUserId()
         {
+            using var _context = new AirlineDbContext();
             return _context.Users.Where(x => x.ID == 1).Select(x => x.ID).FirstOrDefault();
+        }
+        private Booking ConvertBooking(int id)
+        {
+            var booking = _context.Bookings
+                .Include(f => f.Flight)
+                .ThenInclude(f => f.DepartureAirport)
+                .ThenInclude(a => a.Country)
+                .Include(f => f.Flight)
+                .ThenInclude(f => f.ArrivalAirport)
+                .ThenInclude(a => a.Country)
+                .Include(a => a.Flight)
+                .ThenInclude(f => f.DepartureAirport)
+                .ThenInclude(a => a.City)
+                .Include(a => a.Flight)
+                .ThenInclude(f => f.ArrivalAirport)
+                .ThenInclude(a => a.City)
+                .FirstOrDefault(f => f.ID == id);
+    
+            return booking;
         }
     }
 }

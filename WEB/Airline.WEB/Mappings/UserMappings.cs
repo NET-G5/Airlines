@@ -12,7 +12,6 @@ public static class UserMappings
             ID = user.ID,
             Username = user.Username,
             Email = user.Email,
-            // DepartureAirport = user.Bookings.
         };
     }
     

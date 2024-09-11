@@ -13,6 +13,7 @@ public class AirlineDbContext : DbContext
 
     public AirlineDbContext()
     {
+        
     }
     
     public virtual DbSet<Airport> Airports  { get; set; }

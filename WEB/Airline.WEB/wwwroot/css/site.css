@@ -86,4 +86,20 @@ footer .d-flex a {
     font-size: 1.5rem;
 }
 
+.custom-footer {
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-top: -200px;
+}
+
+/* Optional: Adjustments for responsiveness */
+@media (max-width: 768px) {
+    .custom-footer {
+        height: auto;
+        margin-top: 0;
+    }
+}
+
+
 

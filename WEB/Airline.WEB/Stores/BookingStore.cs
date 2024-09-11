@@ -1,8 +1,10 @@
+using Airline.Domain.Entities;
 using Airline.Domain.Interfaces;
 using Airline.Infrastructure;
 using AirlineWeb.Extensions;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.Booking;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Stores;
 
@@ -11,7 +13,7 @@ public class BookingStore : IBookingStore
     private AirlineDbContext _context;
     private readonly ICommonRepository _repository;
 
-    public BookingStore(ICommonRepository repository)
+    public BookingStore(ICommonRepository repository, AirlineDbContext context)
     {
         _context = new();
         _repository = repository?? throw new ArgumentNullException(nameof(repository));
@@ -20,14 +22,14 @@ public class BookingStore : IBookingStore
     public List<BookingView> GetAll(string? search)
     {
         var bookings = _repository.Bookings.GetAll(search);
-        var viewModels = bookings
+        var viewModels = ConvertBookings(bookings)
             .Select(x => x.ToView()).ToList();
 
         return viewModels;    }
 
     public BookingView GetById(int id)
     {
-        var booking = _repository.Bookings.GetById(id);
+        var booking = ConvertBooking(id);
         var viewModel = booking.ToView();
 
         return viewModel;
@@ -73,23 +75,46 @@ public class BookingStore : IBookingStore
         _repository.Bookings.Delete(id);
         _repository.SaveChanges();
     }
+    private Booking ConvertBooking(int id)
+    {
+        var booking = _context.Bookings
+            .Include(f => f.Flight)
+            .ThenInclude(f => f.DepartureAirport)
+            .ThenInclude(a => a.Country)
+            .Include(f => f.Flight)
+            .ThenInclude(f => f.ArrivalAirport)
+            .ThenInclude(a => a.Country)
+            .Include(a => a.Flight)
+            .ThenInclude(f => f.DepartureAirport)
+            .ThenInclude(a => a.City)
+            .Include(a => a.Flight)
+            .ThenInclude(f => f.ArrivalAirport)
+            .ThenInclude(a => a.City)
+            .FirstOrDefault(f => f.ID == id);
     
-    // public List<Booking> ConvertFlight(List<Booking> booking)
-    // {
-    //     var flightIds = flights.Select(f => f.ID).ToList();
-    //
-    //     var allFlights = _context.Flights
-    //         .Where(f => flightIds.Contains(f.ID))
-    //         .Include(f => f.DepartureAirport)
-    //         .ThenInclude(a => a.Country)
-    //         .Include(f => f.ArrivalAirport)
-    //         .ThenInclude(a => a.Country)
-    //         .Include(f => f.DepartureAirport)
-    //         .ThenInclude(a => a.City)
-    //         .Include(f => f.ArrivalAirport)
-    //         .ThenInclude(a => a.City)
-    //         .ToList();
-    //
-    //     return allFlights;
-    // }
+        return booking;
+    }
+    
+    public List<Booking> ConvertBookings(List<Booking> booking)
+    {
+        var bookingsIds = booking.Select(f => f.ID).ToList();
+    
+        var allBookings = _context.Bookings
+            .Where(f => bookingsIds.Contains(f.ID))
+            .Include(f => f.Flight)
+            .ThenInclude(f => f.DepartureAirport)
+            .ThenInclude(a => a.Country)
+            .Include(f => f.Flight)
+            .ThenInclude(f => f.ArrivalAirport)
+            .ThenInclude(a => a.Country)
+            .Include(a => a.Flight)
+            .ThenInclude(f => f.DepartureAirport)
+            .ThenInclude(a => a.City)
+            .Include(a => a.Flight)
+            .ThenInclude(f => f.ArrivalAirport)
+            .ThenInclude(a => a.City)
+            .ToList();
+    
+        return allBookings;
+    }
 }

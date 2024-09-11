@@ -1,3 +1,4 @@
+@using AirlineWeb.ViewModels.Booking
 @model AirlineWeb.ViewModels.User.UserView
 
 @{
@@ -10,9 +11,9 @@
     <div class="row justify-content-center">
         <!-- Profile Information Card -->
         <div class="col-md-6">
-            <div class="card mb-4">
+            <div class="card mb-4 p-4 shadow-lg border-0" style="border-radius: 12px;">
                 <div class="card-body text-center">
-                    <img src="/images/benjamin-franklin-cut-on-new-260nw-2031485351.webp" alt="Profile Image" class="img-fluid rounded-circle mb-3" style="width: 170px; height: 150px;">
+                    <img src="/images/benjamin-franklin-cut-on-new-260nw-2031485351.webp" alt="Profile Image" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
                     <h5 class="card-title">Personal Information</h5>
                     <dl class="row">
                         <dt class="col-sm-4">Username</dt>
@@ -36,7 +37,6 @@
                         <table class="table table-striped table-hover">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>Flight Number</th>
                                     <th>Departure</th>
                                     <th>Arrival</th>
                                     <th>Booking Date</th>
@@ -45,17 +45,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @* @foreach (var booking in Model.Bookings) *@
-                                @* { *@
-                                @*     <tr> *@
-                                @*         <td>@booking.DepartureAirport</td> *@
-                                @*         <td>@booking.ArrivalAirport</td> *@
-                                @*         <td>@booking.BookingDate.ToString("d MMM yyyy")</td> *@
-                                @*         <td>@booking.SeatNumber</td> *@
-                                @*         <td>@booking.TotalPrice.ToString("C")</td> *@
-                                @*     </tr> *@
-                                @* } *@
+                            @if (ViewBag.Bookings != null)
+                            {
+                                var bookings = ViewBag.Bookings as List<BookingView>;
+
+                                if (bookings != null)
+                                {
+                                    foreach (var booking in bookings)
+                                        {
+                                        <tr>
+                                            <td>Country: @booking.DepartureAirportCountry<br>City: @booking.DepartureAirportCountry</td>
+                                            <td>Country: @booking.ArrivalAirportCountry<br>City: @booking.ArrivalAirportCity</td>
+                                            <td>@booking.BookingDate.ToString("d MMM yyyy")</td>
+                                            <td>@booking.SeatNumber</td>
+                                            <td>@booking.TotalPrice.ToString("C")</td>
+                                        </tr>
+                                        }
+                                }
+                            }
                             </tbody>
+
                         </table>
                     </div>
                 </div>

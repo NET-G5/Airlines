@@ -1,8 +1,6 @@
 using Airline.Domain.Entities;
 using Airline.Domain.Interfaces;
 using Airline.Infrastructure;
-using Airline.Infrastructure.Repositories;
-using AirlineWeb.Extensions;
 using AirlineWeb.Mappings;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.Flight;
@@ -23,7 +21,7 @@ public class FlightStore : IFlightStore
     }
     
     public List<FlightView> GetAll(string where = "", string to = "",
-        string departure = "", string numberOfAdults = "")
+        string departure = "", string numberOfAdults=null)
     {
         var flights = _repository.Flights.GetAll(where, to, departure, numberOfAdults);
         
