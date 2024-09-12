@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Infrastructure.Repositories;
 
-public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : EntityBase
+public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : EntityBase
 {
     protected readonly AirlineDbContext _context;
     
     protected RepositoryBase(AirlineDbContext context)
     {
-        // _context = context;
-        _context = new();
+        _context = context; 
     }
     
     public List<TEntity> GetAll() =>

@@ -6,18 +6,20 @@ namespace Airline.Infrastructure.Repositories;
 
 public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
 {
-    protected readonly AirlineDbContext _context;
-
-    public FlightRepository(AirlineDbContext context) : base(context)
-    {
-        this._context = new();
-    }
-
+    public FlightRepository(AirlineDbContext context) : base(context) { }
     public List<Flight> GetAll(string where = "", string to = "", string departure = "", string numberOfAdults = "")
     {
-        using var _context = new AirlineDbContext();
         
-        var query = _context.Flights.AsQueryable();
+        var query = _context.Flights
+            .Include(f => f.DepartureAirport)
+            .ThenInclude(a => a.Country)
+            .Include(f => f.ArrivalAirport)
+            .ThenInclude(a => a.Country)
+            .Include(f => f.DepartureAirport)
+            .ThenInclude(a => a.City)
+            .Include(f => f.ArrivalAirport)
+            .ThenInclude(a => a.City)
+            .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(where))
         {
@@ -48,29 +50,26 @@ public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
         }
 
 
-        string q = query.ToQueryString();
-        
-        var flights = query.AsNoTracking().ToList();
 
-        return flights;
+        return [.. query];
     }
     
-    private List<Flight> ConvertFlight(List<Flight> flights)
-    {
-        var flightIds = flights.Select(f => f.ID).ToList();
+    //private List<Flight> ConvertFlight(List<Flight> flights)
+    //{
+    //    var flightIds = flights.Select(f => f.ID).ToList();
 
-        var allFlights = base._context.Flights
-            .Where(f => flightIds.Contains(f.ID))
-            .Include(f => f.DepartureAirport)
-            .ThenInclude(a => a.Country)
-            .Include(f => f.ArrivalAirport)
-            .ThenInclude(a => a.Country)
-            .Include(f => f.DepartureAirport)
-            .ThenInclude(a => a.City)
-            .Include(f => f.ArrivalAirport)
-            .ThenInclude(a => a.City)
-            .ToList();
+    //    var allFlights = base._context.Flights
+    //        .Where(f => flightIds.Contains(f.ID))
+    //        .Include(f => f.DepartureAirport)
+    //        .ThenInclude(a => a.Country)
+    //        .Include(f => f.ArrivalAirport)
+    //        .ThenInclude(a => a.Country)
+    //        .Include(f => f.DepartureAirport)
+    //        .ThenInclude(a => a.City)
+    //        .Include(f => f.ArrivalAirport)
+    //        .ThenInclude(a => a.City)
+    //        .ToList();
 
-        return allFlights;
-    }
+    //    return allFlights;
+    //}
 }

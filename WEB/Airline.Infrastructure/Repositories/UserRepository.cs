@@ -1,5 +1,6 @@
 using Airline.Domain.Entities;
 using Airline.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Infrastructure.Repositories;
 
@@ -14,7 +15,9 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
                 return GetAll();
             }
 
-            var users = _context.Users
+
+
+            var users = _context.Users.Include(u => u.Bookings)
                 .Where(x => x.Username == search
                 || x.Email == search)
                 .ToList();
