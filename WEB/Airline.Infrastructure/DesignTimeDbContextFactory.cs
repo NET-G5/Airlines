@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Airline.Infrastructure;
 
-public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AirlineDbContext>
-{
-    public AirlineDbContext CreateDbContext(string[] args)
-    {
-        var optionsBuilder = new DbContextOptionsBuilder<AirlineDbContext>();
-        optionsBuilder.UseSqlServer(ConfigurationDefaults.ConectionString);
+//public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AirlineDbContext>
+//{
+//    //public AirlineDbContext CreateDbContext(string[] args)
+//    //{
+//    //    var optionsBuilder = new DbContextOptionsBuilder<AirlineDbContext>();
+//    //    optionsBuilder.UseSqlServer(ConfigurationDefaults.ConectionString);
 
-        return new AirlineDbContext(optionsBuilder.Options);
-    }
-}
+//    //    return new AirlineDbContext(optionsBuilder.Options);
+//    //}
+//}

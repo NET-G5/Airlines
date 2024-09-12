@@ -11,10 +11,10 @@ public class AirlineDbContext : DbContext
     public AirlineDbContext(DbContextOptions<AirlineDbContext> options)
         : base(options){}
 
-    public AirlineDbContext()
-    {
+    //public AirlineDbContext()
+    //{
         
-    }
+    //}
     
     public virtual DbSet<Airport> Airports  { get; set; }
     public virtual DbSet<Booking> Bookings { get; set; }
@@ -28,11 +28,6 @@ public class AirlineDbContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer(ConfigurationDefaults.ConectionString);
-        }
-        
         optionsBuilder.AddInterceptors(new AuditInterceptor());
         base.OnConfiguring(optionsBuilder);
     }
