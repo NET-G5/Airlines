@@ -12,14 +12,12 @@ namespace AirlineWeb.Controllers
 {
     public class FlightController : Controller
     {
-        private readonly AirlineDbContext _context;
         private readonly IUserStore _userStore;
         private readonly IFlightStore _flightStore;
 
         public FlightController(ICommonRepository commonRepository, 
             IFlightStore flightStore, AirlineDbContext context, IUserStore userStore)
         {
-            _context = new();
             _userStore = userStore;
             _flightStore = flightStore;
         }
@@ -79,16 +77,14 @@ namespace AirlineWeb.Controllers
         // GET: /Flight/Details/5
         public IActionResult Details(int id)
         {
-            var flight = ConvertFlight(id);
+            var flight = _flightStore.GetById(id);
 
             if (flight is null)
             {
                 return NotFound();
             }
 
-            var viewModel = flight.ToView();
-            
-            return View(viewModel);
+            return View(flight);
         }
 
         // GET: /Flight/Delete/5
@@ -127,20 +123,20 @@ namespace AirlineWeb.Controllers
             return View();
         }
         
-        private Flight ConvertFlight(int id)
-        {
-            var flight = _context.Flights
-                .Include(f => f.DepartureAirport)
-                .ThenInclude(f => f.Country)
-                .Include(f => f.ArrivalAirport)
-                .ThenInclude( f => f.Country)
-                .Include(f => f.DepartureAirport)
-                .ThenInclude(a => a.City)
-                .Include(f => f.ArrivalAirport)
-                .ThenInclude(a => a.City)
-                .FirstOrDefault(f => f.ID == id);
+        //private Flight ConvertFlight(int id)
+        //{
+        //    var flight = _context.Flights
+        //        .Include(f => f.DepartureAirport)
+        //        .ThenInclude(f => f.Country)
+        //        .Include(f => f.ArrivalAirport)
+        //        .ThenInclude( f => f.Country)
+        //        .Include(f => f.DepartureAirport)
+        //        .ThenInclude(a => a.City)
+        //        .Include(f => f.ArrivalAirport)
+        //        .ThenInclude(a => a.City)
+        //        .FirstOrDefault(f => f.ID == id);
 
-            return flight;
-        }
+        //    return flight;
+        //}
     }
 }
