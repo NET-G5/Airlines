@@ -68,11 +68,8 @@ public class UserStore : IUserStore
     
     public void AddFlightToUser(int userId, int flightId)
     {
-        using (var context = new AirlineDbContext())
-        {
             // Найти пользователя по идентификатору
-            var user = context.Users
-                .Include(u => u.Bookings) // Подгружаем бронирования пользователя
+            var user = _repository.Users.GetAll("") // Подгружаем бронирования пользователя
                 .FirstOrDefault(u => u.ID == userId);
 
             if (user == null)
@@ -80,7 +77,7 @@ public class UserStore : IUserStore
                 throw new Exception("User not found");
             }
 
-            var flight = context.Flights
+            var flight = _repository.Flights.GetAll("")
                 .FirstOrDefault(f => f.ID == flightId);
 
             if (flight == null)
@@ -98,16 +95,15 @@ public class UserStore : IUserStore
             };
 
             // Добавить бронирование в контекст данных
-            context.Bookings.Add(booking);
+            _repository.Bookings.Create(booking);
 
             // Сохранить изменения в базе данных
-            context.SaveChangesAsync();
+            _repository.SaveChanges();
         }
-    }
-
     
     public void Delete(int id)
     {
         _repository.Users.Delete(id);
-        _repository.SaveChanges();    }
+        _repository.SaveChanges();
+    }
 }

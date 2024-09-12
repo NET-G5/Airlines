@@ -13,23 +13,22 @@ public class BookingStore : IBookingStore
     private AirlineDbContext _context;
     private readonly ICommonRepository _repository;
 
-    public BookingStore(ICommonRepository repository, AirlineDbContext context)
+    public BookingStore(ICommonRepository repository)
     {
-        _context = new();
         _repository = repository?? throw new ArgumentNullException(nameof(repository));
     }
     
     public List<BookingView> GetAll(string? search)
     {
         var bookings = _repository.Bookings.GetAll(search);
-        var viewModels = ConvertBookings(bookings)
+        var viewModels = bookings
             .Select(x => x.ToView()).ToList();
 
         return viewModels;    }
 
     public BookingView GetById(int id)
     {
-        var booking = ConvertBooking(id);
+        var booking = _repository.Bookings.GetById(id);
         var viewModel = booking.ToView();
 
         return viewModel;
@@ -75,46 +74,46 @@ public class BookingStore : IBookingStore
         _repository.Bookings.Delete(id);
         _repository.SaveChanges();
     }
-    private Booking ConvertBooking(int id)
-    {
-        var booking = _context.Bookings
-            .Include(f => f.Flight)
-            .ThenInclude(f => f.DepartureAirport)
-            .ThenInclude(a => a.Country)
-            .Include(f => f.Flight)
-            .ThenInclude(f => f.ArrivalAirport)
-            .ThenInclude(a => a.Country)
-            .Include(a => a.Flight)
-            .ThenInclude(f => f.DepartureAirport)
-            .ThenInclude(a => a.City)
-            .Include(a => a.Flight)
-            .ThenInclude(f => f.ArrivalAirport)
-            .ThenInclude(a => a.City)
-            .FirstOrDefault(f => f.ID == id);
+    //private Booking ConvertBooking(int id)
+    //{
+    //    var booking = _context.Bookings
+    //        .Include(f => f.Flight)
+    //        .ThenInclude(f => f.DepartureAirport)
+    //        .ThenInclude(a => a.Country)
+    //        .Include(f => f.Flight)
+    //        .ThenInclude(f => f.ArrivalAirport)
+    //        .ThenInclude(a => a.Country)
+    //        .Include(a => a.Flight)
+    //        .ThenInclude(f => f.DepartureAirport)
+    //        .ThenInclude(a => a.City)
+    //        .Include(a => a.Flight)
+    //        .ThenInclude(f => f.ArrivalAirport)
+    //        .ThenInclude(a => a.City)
+    //        .FirstOrDefault(f => f.ID == id);
     
-        return booking;
-    }
+    //    return booking;
+    //}
     
-    public List<Booking> ConvertBookings(List<Booking> booking)
-    {
-        var bookingsIds = booking.Select(f => f.ID).ToList();
+//    public List<Booking> ConvertBookings(List<Booking> booking)
+//    {
+//        var bookingsIds = booking.Select(f => f.ID).ToList();
     
-        var allBookings = _context.Bookings
-            .Where(f => bookingsIds.Contains(f.ID))
-            .Include(f => f.Flight)
-            .ThenInclude(f => f.DepartureAirport)
-            .ThenInclude(a => a.Country)
-            .Include(f => f.Flight)
-            .ThenInclude(f => f.ArrivalAirport)
-            .ThenInclude(a => a.Country)
-            .Include(a => a.Flight)
-            .ThenInclude(f => f.DepartureAirport)
-            .ThenInclude(a => a.City)
-            .Include(a => a.Flight)
-            .ThenInclude(f => f.ArrivalAirport)
-            .ThenInclude(a => a.City)
-            .ToList();
+//        var allBookings = _context.Bookings
+//            .Where(f => bookingsIds.Contains(f.ID))
+//            .Include(f => f.Flight)
+//            .ThenInclude(f => f.DepartureAirport)
+//            .ThenInclude(a => a.Country)
+//            .Include(f => f.Flight)
+//            .ThenInclude(f => f.ArrivalAirport)
+//            .ThenInclude(a => a.Country)
+//            .Include(a => a.Flight)
+//            .ThenInclude(f => f.DepartureAirport)
+//            .ThenInclude(a => a.City)
+//            .Include(a => a.Flight)
+//            .ThenInclude(f => f.ArrivalAirport)
+//            .ThenInclude(a => a.City)
+//            .ToList();
     
-        return allBookings;
-    }
+//        return allBookings;
+//    }
 }
