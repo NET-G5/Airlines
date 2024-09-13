@@ -16,14 +16,14 @@ public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
         if (!string.IsNullOrWhiteSpace(where))
         {
             var pattern = $"%{where}%";
-            query = query.Where(x => EF.Functions.Like(x.DepartureAirport.Name, pattern));
+            query = query.Where(x => EF.Functions.Like(x.DepartureAirport.Country.CountryName, pattern));
             query = query.Where(x => EF.Functions.Like(x.DepartureAirport.City.CityName, pattern));
         }
 
         if (!string.IsNullOrWhiteSpace(to))
         {
             var pattern = $"%{to}%";
-            query = query.Where(x => EF.Functions.Like(x.ArrivalAirport.Name, pattern));
+            query = query.Where(x => EF.Functions.Like(x.ArrivalAirport.Country.CountryName, pattern));
             query = query.Where(x => EF.Functions.Like(x.ArrivalAirport.City.CityName, pattern));
         }
 
