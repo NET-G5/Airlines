@@ -32,14 +32,15 @@
                 </dl>
             </div>
             <div class="card-footer text-center bg-light" style="border-radius: 0 0 15px 15px;">
-                <a class="btn btn-secondary btn-lg" style="background-color: #605DEC; width: 130px;"
-                   asp-controller="Flight"
-                   asp-action="Buy"
-                   asp-route-userId=""
-                   asp-route-flightId="@Model.ID">
-                    Buy
-                </a>
-                <a class="btn btn-secondary btn-lg" style="background-color: #1c1f23; width: 130px;"
+                <form asp-action="Buy" method="post" style="display: inline-block;">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="userId" value="1" />
+                    <input type="hidden" name="flightId" value="@Model.ID" />
+                    <button type="submit" class="btn btn-secondary btn-lg" style="background-color: #605DEC; width: 130px; height: 50px;">
+                        Buy
+                    </button>
+                </form>
+                <a class="btn btn-secondary btn-lg" style="background-color: #1c1f23; width: 130px; height: 50px; display: inline-block;"
                    asp-controller="Flight"
                    asp-action="Index">
                     Cancel

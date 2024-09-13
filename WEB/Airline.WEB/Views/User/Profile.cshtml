@@ -52,7 +52,7 @@
                                 if (bookings != null)
                                 {
                                     foreach (var booking in bookings)
-                                        {
+                                    {
                                         <tr>
                                             <td>Country: @booking.DepartureAirportCountry<br>City: @booking.DepartureAirportCountry</td>
                                             <td>Country: @booking.ArrivalAirportCountry<br>City: @booking.ArrivalAirportCity</td>
@@ -60,11 +60,10 @@
                                             <td>@booking.SeatNumber</td>
                                             <td>@booking.TotalPrice.ToString("C")</td>
                                         </tr>
-                                        }
+                                    }
                                 }
                             }
                             </tbody>
-
                         </table>
                     </div>
                 </div>
