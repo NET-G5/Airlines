@@ -1,6 +1,5 @@
 using System.Reflection;
 using Airline.Domain.Entities;
-using Airline.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Airline.Infrastructure.Persistence.Interceptors;
 
@@ -10,11 +9,6 @@ public class AirlineDbContext : DbContext
 {
     public AirlineDbContext(DbContextOptions<AirlineDbContext> options)
         : base(options){}
-
-    //public AirlineDbContext()
-    //{
-        
-    //}
     
     public virtual DbSet<Airport> Airports  { get; set; }
     public virtual DbSet<Booking> Bookings { get; set; }
