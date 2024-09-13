@@ -1,12 +1,6 @@
-using Airline.Domain.Entities;
-using Airline.Domain.Interfaces;
-using Airline.Infrastructure;
-using AirlineWeb.Mappings;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.Flight;
-using AirlineWeb.ViewModels.User;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Controllers
 {
@@ -15,8 +9,7 @@ namespace AirlineWeb.Controllers
         private readonly IUserStore _userStore;
         private readonly IFlightStore _flightStore;
 
-        public FlightController(ICommonRepository commonRepository, 
-            IFlightStore flightStore, AirlineDbContext context, IUserStore userStore)
+        public FlightController(IFlightStore flightStore, IUserStore userStore)
         {
             _userStore = userStore;
             _flightStore = flightStore;
@@ -64,7 +57,7 @@ namespace AirlineWeb.Controllers
         // POST: /Flight/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, UpdateFlightView model)
+        public IActionResult Edit(UpdateFlightView model)
         {
             if (ModelState.IsValid)
             {
@@ -118,25 +111,17 @@ namespace AirlineWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Buy(int userId, int flightId)
         {
-            _userStore.AddFlightToUser(1, flightId);
-            
-            return View();
+            try
+            {
+                _userStore.AddFlightToUser(userId, flightId);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ModelState.AddModelError("", "Произошла ошибка при добавлении рейса.");
+                return View();
+            }
         }
-        
-        //private Flight ConvertFlight(int id)
-        //{
-        //    var flight = _context.Flights
-        //        .Include(f => f.DepartureAirport)
-        //        .ThenInclude(f => f.Country)
-        //        .Include(f => f.ArrivalAirport)
-        //        .ThenInclude( f => f.Country)
-        //        .Include(f => f.DepartureAirport)
-        //        .ThenInclude(a => a.City)
-        //        .Include(f => f.ArrivalAirport)
-        //        .ThenInclude(a => a.City)
-        //        .FirstOrDefault(f => f.ID == id);
-
-        //    return flight;
-        //}
     }
 }

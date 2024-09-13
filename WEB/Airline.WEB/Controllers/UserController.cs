@@ -1,16 +1,13 @@
-using Airline.Domain.Entities;
-using Airline.Infrastructure;
 using AirlineWeb.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using AirlineWeb.Stores.Interfaces;
 using AirlineWeb.ViewModels.User;
-using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Controllers
 {
     public class UserController : Controller
     {
-        int userID = 403;
+        private int userID = 1;
         private readonly IUserStore _userStore;
         private readonly IBookingStore _bookingStore;
 
@@ -23,21 +20,16 @@ namespace AirlineWeb.Controllers
         // GET: /User/Profile
         public IActionResult Profile()
         {
-            if (userID == null)
-            {
-                return Unauthorized(); 
-            }
-
             var user = _userStore.GetById(userID);
 
-            //if (user == null)
-            //{
-            //    return NotFound();
-            //}
+            if (user == null)
+            {
+                return NotFound();
+            }
 
             var bookingsWithID = _bookingStore
                 .GetAll("")
-                .Where(b => b.ID == userID)
+                .Where(b => b.UserID == userID)
                 .ToList();
 
             ViewBag.Bookings = bookingsWithID;
@@ -83,39 +75,11 @@ namespace AirlineWeb.Controllers
                     return NotFound();
                 }
 
-                userEntitry.Username = model.Username;
-                userEntitry.Email = model.Email;
-                userEntitry.PasswordHash = model.PasswordHash; // Be cautious with this field; usually, we don't display it
-
                 _userStore.Update(userEntitry.ToUpdateView());
 
                 return RedirectToAction(nameof(Profile));
             }
             return View(model);
         }
-
-        //private User ConvertUser(int userID)
-        //{
-        //    var user = _context.Users
-        //        .Include(u => u.Bookings)
-        //        .ThenInclude(b => b.Flight)
-        //        .ThenInclude(f => f.ArrivalAirport)
-        //        .ThenInclude(a => a.Country)
-        //        .Include(u => u.Bookings)
-        //        .ThenInclude(b => b.Flight)
-        //        .ThenInclude(f => f.ArrivalAirport)
-        //        .ThenInclude(a => a.City)
-        //        .Include(u => u.Bookings)
-        //        .ThenInclude(b => b.Flight)
-        //        .ThenInclude(f => f.ArrivalAirport)
-        //        .ThenInclude(a => a.Country)
-        //        .Include(u => u.Bookings)
-        //        .ThenInclude(b => b.Flight)
-        //        .ThenInclude(f => f.DepartureAirport)
-        //        .ThenInclude(a => a.City)
-        //        .FirstOrDefault(u => u.ID == userID);
-
-        //    return user;
-        //}
     }
 }
