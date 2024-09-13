@@ -1,5 +1,4 @@
 using Airline.Domain.Entities;
-using AirlineWeb.ViewModels.Airport;
 using AirlineWeb.ViewModels.City;
 
 namespace AirlineWeb.Extensions;

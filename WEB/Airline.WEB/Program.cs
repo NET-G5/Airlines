@@ -17,7 +17,7 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQx
 
 // Configure database _context
 builder.Services.AddDbContext<AirlineDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString(ConfigurationDefaults.ConectionString)));
+    options.UseSqlServer("Server=localhost; Database=AirlineDataBase; User Id=sa; Password=MyP@ssw0rd123; TrustServerCertificate=True;"));
 
 // Register repositories
 builder.Services.AddScoped<ICommonRepository, CommonRepository>();

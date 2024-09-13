@@ -5,4 +5,5 @@ namespace Airline.Domain.Interfaces;
 public interface IUserRepository : IRepositoryBase<User>
 {
     List<User> GetAll(string? search);
+    User GetByIdUser(int id);
 }

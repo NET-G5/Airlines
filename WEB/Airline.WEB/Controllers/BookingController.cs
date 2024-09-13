@@ -1,8 +1,5 @@
-using Airline.Domain.Entities;
-using Airline.Infrastructure;
 using AirlineWeb.Stores.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Controllers
 {
@@ -21,7 +18,9 @@ namespace AirlineWeb.Controllers
         public IActionResult Index()
         {
             var userId = GetUserId();
-            var bookings = _bookingStore.GetById(userId);
+            var bookings = _bookingStore.GetAll("")
+                .Where(b => b.UserID == userId).ToList();
+            
             return View(bookings);
         }
         
@@ -70,34 +69,14 @@ namespace AirlineWeb.Controllers
                 return Unauthorized(); 
             }
 
-            _bookingStore.Delete(booking.UserID); // Убедитесь, что используете правильный идентификатор
+            _bookingStore.Delete(booking.ID);
 
             return RedirectToAction("Index");
         }
         
-        // Новый метод для получения UserID
         private int GetUserId()
         {
             return _userStore.GetAll("").Where(x => x.ID == 1).Select(x => x.ID).FirstOrDefault();
         }
-        //private Booking ConvertBooking(int id)
-        //{
-        //    var booking = _context.Bookings
-        //        .Include(f => f.Flight)
-        //        .ThenInclude(f => f.DepartureAirport)
-        //        .ThenInclude(a => a.Country)
-        //        .Include(f => f.Flight)
-        //        .ThenInclude(f => f.ArrivalAirport)
-        //        .ThenInclude(a => a.Country)
-        //        .Include(a => a.Flight)
-        //        .ThenInclude(f => f.DepartureAirport)
-        //        .ThenInclude(a => a.City)
-        //        .Include(a => a.Flight)
-        //        .ThenInclude(f => f.ArrivalAirport)
-        //        .ThenInclude(a => a.City)
-        //        .FirstOrDefault(f => f.ID == id);
-    
-        //    return booking;
-        //}
     }
 }

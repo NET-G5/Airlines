@@ -1,4 +1,3 @@
-using AirlineWeb.ViewModels.Booking;
 using AirlineWeb.ViewModels.Flight;
 
 namespace AirlineWeb.Stores.Interfaces;

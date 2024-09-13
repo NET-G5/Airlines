@@ -1,4 +1,5 @@
 using Airline.Domain.Entities;
+using Airline.Domain.Exceptions;
 using Airline.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,19 +8,10 @@ namespace Airline.Infrastructure.Repositories;
 public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
 {
     public FlightRepository(AirlineDbContext context) : base(context) { }
+    
     public List<Flight> GetAll(string where = "", string to = "", string departure = "", string numberOfAdults = "")
     {
-        
-        var query = _context.Flights
-            .Include(f => f.DepartureAirport)
-            .ThenInclude(a => a.Country)
-            .Include(f => f.ArrivalAirport)
-            .ThenInclude(a => a.Country)
-            .Include(f => f.DepartureAirport)
-            .ThenInclude(a => a.City)
-            .Include(f => f.ArrivalAirport)
-            .ThenInclude(a => a.City)
-            .AsQueryable();
+        var query = GetFlightQuery();
 
         if (!string.IsNullOrWhiteSpace(where))
         {
@@ -49,27 +41,46 @@ public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
             // query = query.Where(x => x.AvailableSeats >= adults);
         }
 
-
-
-        return [.. query];
+        var flights = query.ToList();
+        
+        return flights;
     }
-    
-    //private List<Flight> ConvertFlight(List<Flight> flights)
-    //{
-    //    var flightIds = flights.Select(f => f.ID).ToList();
 
-    //    var allFlights = base._context.Flights
-    //        .Where(f => flightIds.Contains(f.ID))
-    //        .Include(f => f.DepartureAirport)
-    //        .ThenInclude(a => a.Country)
-    //        .Include(f => f.ArrivalAirport)
-    //        .ThenInclude(a => a.Country)
-    //        .Include(f => f.DepartureAirport)
-    //        .ThenInclude(a => a.City)
-    //        .Include(f => f.ArrivalAirport)
-    //        .ThenInclude(a => a.City)
-    //        .ToList();
+    public Flight GetByIdFlight(int id)
+    {
+        var entity = GetOrThrow(id);
 
-    //    return allFlights;
-    //}
+        return entity;
+    }
+
+    private Flight GetOrThrow(int id)
+    {
+        if (_context == null)
+        {
+            throw new InvalidOperationException("Database context is not initialized.");
+        }
+
+        var entity = GetFlightQuery().AsNoTracking().FirstOrDefault(x => x.ID == id);
+
+        if (entity == null)
+        {
+            throw new EntityNotFoundException($"{typeof(Flight)} with id:{id} is not found");
+        }
+
+        return entity;
+    }
+
+    private IQueryable<Flight> GetFlightQuery()
+    {
+        return _context.Flights
+            .Include(f => f.DepartureAirport)
+            .ThenInclude(a => a.Country)
+            .Include(f => f.ArrivalAirport)
+            .ThenInclude(a => a.Country)
+            .Include(f => f.DepartureAirport)
+            .ThenInclude(a => a.City)
+            .Include(f => f.ArrivalAirport)
+            .ThenInclude(a => a.City)
+            .AsQueryable();
+    }
 }
