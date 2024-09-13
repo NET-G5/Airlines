@@ -6,20 +6,21 @@ namespace AirlineWeb.Extensions;
 public static class BookingMappings
 {
     public static BookingView ToView(this Booking booking)
-    {
-        return new BookingView
+    {  
+    return new BookingView
         {
             ID = booking.ID,
             UserID = booking.UserID,
             BookingDate = booking.BookingDate,
             SeatNumber = booking.SeatNumber,
             TotalPrice = booking.TotalPrice,
-            DepartureAirportCountry = booking.Flight.DepartureAirport.Country.CountryName,
-            DepartureAirportCity = booking.Flight.DepartureAirport.City.CityName,
-            ArrivalAirportCountry = booking.Flight.ArrivalAirport.Country.CountryName,
-            ArrivalAirportCity = booking.Flight.ArrivalAirport.City.CityName,
+            DepartureAirportCountry = booking.Flight?.DepartureAirport?.Country?.CountryName ?? "Unknown",
+            DepartureAirportCity = booking.Flight?.DepartureAirport?.City?.CityName ?? "Unknown",
+            ArrivalAirportCountry = booking.Flight?.ArrivalAirport?.Country?.CountryName ?? "Unknown",
+            ArrivalAirportCity = booking.Flight?.ArrivalAirport?.City?.CityName ?? "Unknown",
         };
     }
+
     
     public static UpdateBookingView ToUpdateView(this Booking booking)
     {
