@@ -2,10 +2,11 @@ using System.Reflection;
 using Airline.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Airline.Infrastructure.Persistence.Interceptors;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Airline.Infrastructure;
 
-public class AirlineDbContext : DbContext
+public class AirlineDbContext : IdentityDbContext
 {
     public AirlineDbContext(DbContextOptions<AirlineDbContext> options)
         : base(options){}
