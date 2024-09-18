@@ -1,7 +1,6 @@
 using Airline.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Syncfusion.EJ2.Charts;
 
 namespace Airline.Infrastructure.Persistence.Configurations;
 
