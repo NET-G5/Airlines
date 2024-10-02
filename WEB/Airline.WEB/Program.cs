@@ -4,13 +4,16 @@ using Airline.Infrastructure.Repositories;
 using AirlineWeb.Extensions;
 using AirlineWeb.Stores;
 using AirlineWeb.Stores.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using UserStore = AirlineWeb.Stores.UserStore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("AirlineDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AirlineDbContextConnection' not found.");
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXdccnRSRWJeWER0VkI=");
 
@@ -26,7 +29,14 @@ builder.Services.AddScoped<IUserStore, UserStore>();
 builder.Services.AddScoped<IFlightStore, FlightStore>();
 builder.Services.AddScoped<IBookingStore, BookingStore>();
 
-builder.Services.AddControllers()
+builder.Services
+    .AddControllers(options =>
+    {
+        var polisy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .Build();
+        options.Filters.Add(new AuthorizeFilter(polisy));
+    }) 
     .AddJsonOptions(x =>
     {
         x.JsonSerializerOptions.PropertyNamingPolicy = null;
@@ -38,6 +48,9 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
+    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false; 
+    
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
@@ -49,9 +62,15 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Lockout.AllowedForNewUsers = true;
 
     options.User.RequireUniqueEmail = true;
+});
 
-    options.SignIn.RequireConfirmedAccount = true;
-    options.SignIn.RequireConfirmedPhoneNumber = true;
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.SlidingExpiration = true;
 });
 
 var app = builder.Build();
