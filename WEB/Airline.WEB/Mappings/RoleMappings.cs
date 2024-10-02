@@ -1,7 +1,7 @@
 using Airline.Domain.Entities;
 using AirlineWeb.ViewModels.Role;
 
-namespace AirlineWeb.Extensions;
+namespace AirlineWeb.Mappings;
 
 public static class RoleMappings
 {

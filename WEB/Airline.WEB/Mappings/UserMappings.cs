@@ -10,7 +10,7 @@ public static class UserMappings
         return new UserView
         {
             ID = user.ID,
-            Username = user.Username,
+            Username = user.UserName,
             Email = user.Email,
         };
     }
@@ -20,7 +20,7 @@ public static class UserMappings
         return new User
         {
             ID = userView.ID,
-            Username = userView.Username,
+            UserName = userView.Username,
             Email = userView.Email
         };
     }
@@ -30,7 +30,7 @@ public static class UserMappings
         return new UpdateUserView
         {
             ID = user.ID,
-            Username = user.Username,
+            Username = user.UserName,
             PasswordHash = user.PasswordHash,
             Email = user.Email
         };
@@ -39,7 +39,7 @@ public static class UserMappings
     {
         return new User
         {
-            Username = userView.Username,
+            UserName = userView.Username,
             PasswordHash = userView.PasswordHash,
             Email = userView.Email
         };
