@@ -18,7 +18,7 @@ public static class DatabaseInitializer
             CreateFlights(context);
             CreateUsers(context);
             CreateRoles(context);
-            CreateUserRoles(context);
+            // CreateUserRoles(context);
             CreateBookings(context);
         }
         catch (Exception ex)
@@ -118,7 +118,7 @@ public static class DatabaseInitializer
         {
             var user = new User
             {
-                Username = _faker.Internet.UserName(),
+                UserName = _faker.Internet.UserName(),
                 PasswordHash = _faker.Internet.Password(),
                 Email = _faker.Internet.Email()
             };
@@ -148,38 +148,38 @@ public static class DatabaseInitializer
         context.SaveChanges();
     }
 
-    public static void CreateUserRoles(AirlineDbContext context)
-    {
-        if (context.UserRoles.Any()) return;
-
-        var users = context.Users.ToList(); // Получаем список пользователей для связи
-        var roles = context.Roles.ToList(); // Получаем список ролей для связи
-
-        var uniqueUserRoles = new HashSet<(int UserID, int RoleID)>();
-
-        while (uniqueUserRoles.Count < 200)
-        {
-            var userID = _faker.PickRandom(users).ID;
-            var roleID = _faker.PickRandom(roles).ID;
-
-            var userRolePair = (userID, roleID);
-
-            if (!uniqueUserRoles.Contains(userRolePair))
-            {
-                uniqueUserRoles.Add(userRolePair);
-
-                var userRole = new UserRole
-                {
-                    UserID = userID,
-                    RoleID = roleID
-                };
-
-                context.UserRoles.Add(userRole);
-            }
-        }
-
-        context.SaveChanges();
-    }
+    // public static void CreateUserRoles(AirlineDbContext context)
+    // {
+    //     if (context.UserRoles.Any()) return;
+    //
+    //     var users = context.Users.ToList(); // Получаем список пользователей для связи
+    //     var roles = context.Roles.ToList(); // Получаем список ролей для связи
+    //
+    //     var uniqueUserRoles = new HashSet<(int UserID, int RoleID)>();
+    //
+    //     while (uniqueUserRoles.Count < 200)
+    //     {
+    //         var userID = _faker.PickRandom(users).ID;
+    //         var roleID = _faker.PickRandom(roles).ID;
+    //
+    //         var userRolePair = (userID, roleID);
+    //
+    //         if (!uniqueUserRoles.Contains(userRolePair))
+    //         {
+    //             uniqueUserRoles.Add(userRolePair);
+    //
+    //             var userRole = new UserRole
+    //             {
+    //                 UserID = userID,
+    //                 RoleID = roleID
+    //             };
+    //
+    //             context.UserRoles.Add(userRole);
+    //         }
+    //     }
+    //
+    //     context.SaveChanges();
+    // }
 
 
     public static void CreateBookings(AirlineDbContext context)
