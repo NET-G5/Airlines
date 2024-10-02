@@ -2,7 +2,7 @@ using Airline.Domain.Common;
 
 namespace Airline.Domain.Entities;
 
-public class Airport : AuditableEntity
+public class Airport : EntityBase
 {
     public string Name { get; set; }
     public int CityID { get; set; }
@@ -11,4 +11,10 @@ public class Airport : AuditableEntity
     public virtual Country Country { get; set; }
     public virtual ICollection<Flight> DepartureFlights { get; set; }
     public virtual ICollection<Flight> ArrivalFlights { get; set; }
+
+    public Airport()
+    {
+        DepartureFlights = [];
+        ArrivalFlights = [];
+    }
 }

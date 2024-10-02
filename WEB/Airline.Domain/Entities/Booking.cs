@@ -2,7 +2,7 @@ using Airline.Domain.Common;
 
 namespace Airline.Domain.Entities;
 
-public class Booking : AuditableEntity
+public class Booking : EntityBase
 {
     public int UserID { get; set; }
     public int FlightID { get; set; }
