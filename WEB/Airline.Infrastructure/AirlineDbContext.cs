@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Airline.Infrastructure;
 
-public class AirlineDbContext : IdentityDbContext
+public class AirlineDbContext : IdentityDbContext<User, Role, int> 
 {
     public AirlineDbContext(DbContextOptions<AirlineDbContext> options)
         : base(options){}
@@ -20,7 +20,9 @@ public class AirlineDbContext : IdentityDbContext
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
-    
+    public AirlineDbContext()
+    {
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(new AuditInterceptor());
@@ -31,5 +33,16 @@ public class AirlineDbContext : IdentityDbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
+
+        #region Identity
+
+            modelBuilder.Entity<User>()
+                .ToTable("User");
+
+            modelBuilder.Entity<Role>()
+                .ToTable("Role");
+
+        #endregion
+        
     }
 }
