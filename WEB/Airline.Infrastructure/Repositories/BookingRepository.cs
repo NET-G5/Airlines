@@ -18,7 +18,7 @@ public class BookingRepository : RepositoryBase<Booking>, IBookingRepository
 
         var bookings = GetBookingQuery()
             .Where(x => x.UserID == int.Parse(search)
-            || x.FlightID == int.Parse(search)).ToList();
+                        || x.FlightID == int.Parse(search)).ToList();
 
         return bookings;
     }

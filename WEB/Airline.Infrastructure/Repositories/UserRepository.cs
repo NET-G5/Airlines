@@ -5,9 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Infrastructure.Repositories;
 
-public class UserRepository : RepositoryBase<User>, IUserRepository
+public class UserRepository : IUserRepository
 {
-    public UserRepository(AirlineDbContext context) : base(context) {}
+    private readonly AirlineDbContext _context;
+    
+    public UserRepository(AirlineDbContext context)
+    {
+        _context = context;
+    }
     
     public List<User> GetAll(string? search)
     {
@@ -17,10 +22,16 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
         }
             
         var users = GetUserQuery()
-            .Where(x => x.Username == search || x.Email == search).ToList();
+            .Where(x => x.UserName == search || x.Email == search).ToList();
 
         return users;
     }
+
+    public List<User> GetAll() =>
+        _context.Set<User>().AsNoTracking().ToList();
+
+    public User GetById(int id) => 
+        GetOrThrow(id);
     
     public User GetByIdUser(int id)
     {
@@ -29,6 +40,29 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
         return entity;
     }
 
+    public User Create(User entity)
+    {
+        ArgumentNullException.ThrowIfNull(entity);
+
+        _context.Set<User>().Add(entity);
+
+        return entity;
+    }
+
+    public void Update(User entity)
+    {
+        ArgumentNullException.ThrowIfNull(entity);
+
+        _context.Set<User>().Update(entity);
+    }
+
+    public void Delete(int id)
+    {
+        var entity = GetOrThrow(id);
+
+        _context.Set<User>().Remove(entity);
+    }
+    
     private User GetOrThrow(int id)
     {
         if (_context == null)
@@ -45,7 +79,7 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
 
         return entity;
     }
-
+    
     private IQueryable<User> GetUserQuery()
     {
         return _context.Users
