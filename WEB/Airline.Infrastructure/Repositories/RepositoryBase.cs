@@ -56,7 +56,7 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
 
         var entity = _context.Set<TEntity>()
             .AsNoTracking()
-            .FirstOrDefault(x => x.ID == id);
+            .FirstOrDefault(x => x.ID.Equals(id));
 
         if (entity == null)
         {
