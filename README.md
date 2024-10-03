@@ -51,3 +51,30 @@ To set up the project locally, follow these steps:
 5. **Run the application:**
    ```bash
    dotnet run
+
+---
+
+## 🌐 Usage
+
+1. Access the application at http://localhost:5000.
+2. Users can register for an account.
+3. After registration, users can log in using their credentials.
+4. Once logged in, users can search for available flights and make bookings.
+4. Users can manage their bookings and view flight details.
+
+---
+
+## 🤝 Contribution
+
+Contributions are welcome! To contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-branch
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature
+4.  Push to the branch:
+   ```bash
+   git push origin feature-branch
