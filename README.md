@@ -44,7 +44,7 @@ To set up the project locally, follow these steps:
    dotnet restore
 3. **Configure the database connection:** Update the appsettings.json file with your database connection string:
    ```json
-   "ConnectionStrings": { "DefaultConnection": "Server=localhost; Database=AirlineDataBase; User Id=sa; Password=MyP@ssw0rd123; TrustServerCertificate=True;" }
+   "ConnectionStrings": { "DefaultConnection": "Server=localhost; Database=AirlineDataBase; User Id="UserName"; Password="Password"; TrustServerCertificate=True;" }
 4. **Apply database migrations:**:
    ```bash
    dotnet ef database update
