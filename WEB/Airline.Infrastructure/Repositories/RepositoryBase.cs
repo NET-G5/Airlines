@@ -1,6 +1,7 @@
 using Airline.Domain.Common;
 using Airline.Domain.Exceptions;
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Infrastructure.Repositories;
@@ -47,6 +48,9 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
         _context.Set<TEntity>().Remove(entity);
     }
     
+    public bool Exists(int id)
+        => _context.Set<TEntity>().Any(x => x.Id == id);
+    
     private TEntity GetOrThrow(int id)
     {
         if (_context == null)
@@ -56,7 +60,7 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where T
 
         var entity = _context.Set<TEntity>()
             .AsNoTracking()
-            .FirstOrDefault(x => x.ID.Equals(id));
+            .FirstOrDefault(x => x.Id.Equals(id));
 
         if (entity == null)
         {

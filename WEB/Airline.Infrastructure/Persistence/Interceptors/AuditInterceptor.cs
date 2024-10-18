@@ -1,5 +1,5 @@
 using Airline.Domain.Common;
-using Airline.Infrastructure.Persistence.Extensions;
+using Airline.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 

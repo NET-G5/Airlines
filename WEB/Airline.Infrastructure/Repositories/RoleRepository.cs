@@ -1,6 +1,7 @@
 using Airline.Domain.Entities;
 using Airline.Domain.Exceptions;
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Infrastructure.Repositories;
@@ -13,8 +14,9 @@ public class RoleRepository : IRoleRepository
     {
         _context = context;
     }
-    public List<Role> GetAll() =>
-    _context.Set<Role>().AsNoTracking().ToList();
+
+    public List<Role> GetAll()
+        => _context.Roles.AsNoTracking().ToList();
 
     public Role GetById(int id)
     {
@@ -45,7 +47,10 @@ public class RoleRepository : IRoleRepository
 
         _context.Set<Role>().Remove(entity);
     }
-    
+
+    public bool Exists(int id)
+        => _context.Roles.Any(x => x.Id == id);
+
     private Role GetOrThrow(int id)
     {
         if (_context == null)
@@ -55,7 +60,7 @@ public class RoleRepository : IRoleRepository
 
         var entity = _context.Set<Role>()
             .AsNoTracking()
-            .FirstOrDefault(x => x.ID == id);
+            .FirstOrDefault(x => x.Id == id);
 
         if (entity == null)
         {

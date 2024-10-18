@@ -1,6 +1,7 @@
 using Airline.Domain.Entities;
 using Airline.Domain.Exceptions;
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Infrastructure.Repositories;
@@ -52,7 +53,7 @@ public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
 
         return entity;
     }
-
+    
     private Flight GetOrThrow(int id)
     {
         if (_context == null)
@@ -60,7 +61,7 @@ public class FlightRepository : RepositoryBase<Flight>, IFlightRepository
             throw new InvalidOperationException("Database context is not initialized.");
         }
 
-        var entity = GetFlightQuery().AsNoTracking().FirstOrDefault(x => x.ID == id);
+        var entity = GetFlightQuery().AsNoTracking().FirstOrDefault(x => x.Id == id);
 
         if (entity == null)
         {

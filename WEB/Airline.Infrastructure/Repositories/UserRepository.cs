@@ -1,6 +1,7 @@
 using Airline.Domain.Entities;
 using Airline.Domain.Exceptions;
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Infrastructure.Repositories;
@@ -26,9 +27,9 @@ public class UserRepository : IUserRepository
 
         return users;
     }
-
-    public List<User> GetAll() =>
-        _context.Set<User>().AsNoTracking().ToList();
+    
+    public List<User> GetAll()
+        => _context.Users.AsNoTracking().ToList();
 
     public User GetById(int id) => 
         GetOrThrow(id);
@@ -62,7 +63,10 @@ public class UserRepository : IUserRepository
 
         _context.Set<User>().Remove(entity);
     }
-    
+
+    public bool Exists(int id)
+        => _context.Users.Any(x => x.Id == id);
+
     private User GetOrThrow(int id)
     {
         if (_context == null)
@@ -70,7 +74,7 @@ public class UserRepository : IUserRepository
             throw new InvalidOperationException("Database context is not initialized.");
         }
 
-        var entity = GetUserQuery().AsNoTracking().FirstOrDefault(x => x.ID == id);
+        var entity = GetUserQuery().AsNoTracking().FirstOrDefault(x => x.Id == id);
 
         if (entity == null)
         {

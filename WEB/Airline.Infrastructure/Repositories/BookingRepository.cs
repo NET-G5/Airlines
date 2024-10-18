@@ -1,6 +1,7 @@
 using Airline.Domain.Entities;
 using Airline.Domain.Exceptions;
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Infrastructure.Repositories;
@@ -9,7 +10,7 @@ public class BookingRepository : RepositoryBase<Booking>, IBookingRepository
 {
     public BookingRepository(AirlineDbContext context) : base(context) { }
     
-    public List<Booking> GetAll(string? search)
+    public List<Booking> GetAll(int userId, string? search)
     {
         if (string.IsNullOrEmpty(search))
         {
@@ -17,8 +18,8 @@ public class BookingRepository : RepositoryBase<Booking>, IBookingRepository
         }
 
         var bookings = GetBookingQuery()
-            .Where(x => x.UserID == int.Parse(search)
-                        || x.FlightID == int.Parse(search)).ToList();
+            .Where(x => x.UserId == userId
+                        || x.FlightId == int.Parse(search)).ToList();
 
         return bookings;
     }
@@ -37,7 +38,7 @@ public class BookingRepository : RepositoryBase<Booking>, IBookingRepository
             throw new InvalidOperationException("Database context is not initialized.");
         }
 
-        var entity = GetBookingQuery().AsNoTracking().FirstOrDefault(x => x.ID == id);
+        var entity = GetBookingQuery().AsNoTracking().FirstOrDefault(x => x.Id == id);
 
         if (entity == null)
         {

@@ -1,4 +1,5 @@
 using Airline.Domain.Interfaces;
+using Airline.Infrastructure.Persistence;
 
 namespace Airline.Infrastructure.Repositories;
 
@@ -33,10 +34,6 @@ public class CommonRepository : ICommonRepository
     private IUserRepository _userRepository;
     public IUserRepository Users =>
         _userRepository ??= new UserRepository(_context);
-
-    private IUserRoleRepository _userRoleRepository;
-    public IUserRoleRepository UserRoles =>
-        _userRoleRepository ??= new UserRoleRepository(_context);
     
     public CommonRepository(AirlineDbContext context)
     {
@@ -49,7 +46,6 @@ public class CommonRepository : ICommonRepository
         _flightRepository = new FlightRepository(context);
         _roleRepository = new RoleRepository(context);
         _userRepository = new UserRepository(context);
-        _userRoleRepository = new UserRoleRepository(context);
     }
 
     public int SaveChanges() =>
