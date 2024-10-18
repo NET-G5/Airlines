@@ -9,7 +9,7 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
     public void Configure(EntityTypeBuilder<Country> builder)
     {
         builder.ToTable("Country");
-        builder.HasKey(e => e.ID);
+        builder.HasKey(e => e.Id);
         
         builder.Property(e => e.CountryName)
             .IsRequired()
@@ -17,10 +17,10 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
         
         builder.HasMany(c => c.Cities)
             .WithOne(c => c.Country)
-            .HasForeignKey(c => c.CountryID);
+            .HasForeignKey(c => c.CountryId);
         
         builder.HasMany(c => c.Airports)
             .WithOne(a => a.Country)
-            .HasForeignKey(a => a.CountryID);
+            .HasForeignKey(a => a.CountryId);
     }
 }

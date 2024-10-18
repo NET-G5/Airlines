@@ -9,10 +9,6 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
     public void Configure(EntityTypeBuilder<Role> builder)
     {
         builder.ToTable("Role");
-        builder.HasKey(e => e.ID);
-        
-        builder.HasMany(e => e.UserRoles)
-            .WithOne(ur => ur.Role)
-            .HasForeignKey(ur => ur.RoleID);
+        builder.HasKey(e => e.Id);
     }
 }

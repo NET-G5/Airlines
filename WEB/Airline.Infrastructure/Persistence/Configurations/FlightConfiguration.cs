@@ -9,7 +9,7 @@ public class FlightConfiguration : IEntityTypeConfiguration<Flight>
     public void Configure(EntityTypeBuilder<Flight> builder)
     {
         builder.ToTable("Flight");
-        builder.HasKey(e => e.ID);
+        builder.HasKey(e => e.Id);
         builder.Property(e => e.FlightNumber).IsRequired().HasMaxLength(20);
         builder.Property(e => e.DepartureTime).IsRequired();
         builder.Property(e => e.ArrivalTime).IsRequired();
@@ -18,6 +18,6 @@ public class FlightConfiguration : IEntityTypeConfiguration<Flight>
         
         builder.HasMany(f => f.Bookings)
             .WithOne(b => b.Flight)
-            .HasForeignKey(b => b.FlightID);
+            .HasForeignKey(b => b.FlightId);
     }
 }

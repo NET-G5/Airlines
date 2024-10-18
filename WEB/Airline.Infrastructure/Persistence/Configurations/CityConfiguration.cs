@@ -9,7 +9,7 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
     public void Configure(EntityTypeBuilder<City> builder)
     {
         builder.ToTable("City");
-        builder.HasKey(e => e.ID);
+        builder.HasKey(e => e.Id);
         
         builder.Property(e => e.CityName)
             .IsRequired().
@@ -17,6 +17,6 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
         
         builder.HasMany(c => c.Airports)
             .WithOne(a => a.City)
-            .HasForeignKey(a => a.CityID);
+            .HasForeignKey(a => a.CityId);
     }
 }
