@@ -9,7 +9,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("User");
-        builder.HasKey(e => e.ID);
+        builder.HasKey(e => e.Id);
         
         builder.Property(e => e.UserName)
             .IsRequired()
@@ -19,12 +19,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         
         builder.Property(e => e.Email).IsRequired().HasMaxLength(100);
         
-        builder.HasMany(e => e.UserRoles)
-            .WithOne(ur => ur.User)
-            .HasForeignKey(ur => ur.UserID);
-        
         builder.HasMany(e => e.Bookings)
             .WithOne(b => b.User)
-            .HasForeignKey(b => b.UserID);
+            .HasForeignKey(b => b.UserId);
     }
 }

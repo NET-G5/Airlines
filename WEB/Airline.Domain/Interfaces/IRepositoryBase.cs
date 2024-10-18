@@ -9,4 +9,5 @@ public interface IRepositoryBase<TEntity>
     TEntity Create(TEntity entity);
     void Update(TEntity entity);
     void Delete(int id);
+    bool Exists(int id);
 }

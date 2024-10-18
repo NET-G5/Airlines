@@ -9,7 +9,6 @@ public interface ICommonRepository
     IFlightRepository Flights { get; }
     IRoleRepository Roles { get; }
     IUserRepository Users { get; }
-    IUserRoleRepository UserRoles { get; }
     
     public int SaveChanges();
 }

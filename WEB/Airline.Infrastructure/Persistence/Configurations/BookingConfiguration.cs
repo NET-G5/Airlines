@@ -9,7 +9,7 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
     public void Configure(EntityTypeBuilder<Booking> builder)
     {
         builder.ToTable("Booking");
-        builder.HasKey(e => e.ID);
+        builder.HasKey(e => e.Id);
         builder.Property(e => e.BookingDate).IsRequired();
         builder.Property(e => e.SeatNumber).IsRequired().HasMaxLength(10);
         builder.Property(e => e.TotalPrice).IsRequired();

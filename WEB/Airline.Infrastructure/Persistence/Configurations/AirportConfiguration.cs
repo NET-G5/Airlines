@@ -9,29 +9,29 @@ public class AirportConfiguration : IEntityTypeConfiguration<Airport>
     public void Configure(EntityTypeBuilder<Airport> builder)
     {
         builder.ToTable("Airport");
-        builder.HasKey(e => e.ID);
+        builder.HasKey(e => e.Id);
         
         builder.Property(e => e.Name)
             .IsRequired().HasMaxLength(100);
         
         builder.HasOne(a => a.City)
             .WithMany(c => c.Airports)
-            .HasForeignKey(a => a.CityID)
+            .HasForeignKey(a => a.CityId)
             .OnDelete(DeleteBehavior.Restrict);
         
         builder.HasOne(a => a.Country)
             .WithMany(c => c.Airports)
-            .HasForeignKey(a => a.CountryID)
+            .HasForeignKey(a => a.CountryId)
             .OnDelete(DeleteBehavior.Restrict);
         
         builder.HasMany(a => a.DepartureFlights)
             .WithOne(f => f.DepartureAirport)
-            .HasForeignKey(f => f.DepartureAirportID)
+            .HasForeignKey(f => f.DepartureAirportId)
             .OnDelete(DeleteBehavior.Restrict);
         
         builder.HasMany(a => a.ArrivalFlights)
             .WithOne(f => f.ArrivalAirport)
-            .HasForeignKey(f => f.ArrivalAirportID)
+            .HasForeignKey(f => f.ArrivalAirportId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
