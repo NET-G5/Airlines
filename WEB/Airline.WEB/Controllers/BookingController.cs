@@ -1,4 +1,6 @@
-using AirlineWeb.Stores.Interfaces;
+using Airline.Application.Requests.Booking;
+using Airline.Application.Requests.User;
+using Airline.Application.Stores.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineWeb.Controllers
@@ -15,11 +17,11 @@ namespace AirlineWeb.Controllers
         }
 
         // GET: /Booking/
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] GetBookingRequest request)
         {
             var userId = GetUserId();
-            var bookings = _bookingStore.GetAll("")
-                .Where(b => b.UserID == userId).ToList();
+            var bookings = _bookingStore.GetAll(request.UserId, "")
+                .Where(b => b.UserId == userId).ToList();
             
             return View(bookings);
         }
@@ -64,19 +66,19 @@ namespace AirlineWeb.Controllers
                 return NotFound();
             }
 
-            if (booking.UserID != userId)
+            if (booking.UserId != userId)
             {
                 return Unauthorized(); 
             }
 
-            _bookingStore.Delete(booking.ID);
+            _bookingStore.Delete(booking.Id);
 
             return RedirectToAction("Index");
         }
         
         private int GetUserId()
         {
-            return _userStore.GetAll("").Where(x => x.ID == 1).Select(x => x.ID).FirstOrDefault();
+            return _userStore.GetAll("").Where(x => x.Id == 1).Select(x => x.Id).FirstOrDefault();
         }
     }
 }

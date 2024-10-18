@@ -1,3 +1,4 @@
+using Airline.Domain.Entities;
 using AirlineWeb.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,17 +10,17 @@ namespace AirlineWeb.Controllers;
 [AllowAnonymous]
 public class AccountController : Controller
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
     private readonly ILogger<AccountController> _logger;
 
     public AccountController(
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        UserManager<User> userManager,
+        SignInManager<User> signInManager,
         ILogger<AccountController> logger)
     {
-        _userManager = userManager;
-        _signInManager = signInManager;
+        _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+        _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         _logger = logger;
     }
 
@@ -39,8 +40,7 @@ public class AccountController : Controller
             return View(model);
         }
         
-        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
-            lockoutOnFailure: true);
+        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
         if (result.Succeeded)
         {
             _logger.LogInformation("User logged in.");
@@ -49,8 +49,7 @@ public class AccountController : Controller
 
         if (result.RequiresTwoFactor)
         {
-            return RedirectToAction(nameof(LoginWith2fa),
-                new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction(nameof(LoginWith2fa), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
         }
 
         if (result.IsLockedOut)
@@ -58,12 +57,8 @@ public class AccountController : Controller
             _logger.LogWarning("User account locked out.");
             return RedirectToAction(nameof(Lockout));
         }
-        else
-        {
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            return View(model);
-        }
 
+        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         return View(model);
     }
 
@@ -83,19 +78,16 @@ public class AccountController : Controller
             return View(model);
         }
         
-        var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+        var user = new User { UserName = model.Email, Email = model.Email };
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
             _logger.LogInformation("User created a new account with password.");
 
-            // You might want to add email confirmation here
-            // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            // var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-            // await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
+            // Automatically sign in the user after registration.
             await _signInManager.SignInAsync(user, isPersistent: false);
-            _logger.LogInformation("User created a new account with password.");
+            _logger.LogInformation("User logged in after registration.");
+
             return RedirectToLocal(returnUrl);
         }
 
@@ -132,5 +124,3 @@ public class AccountController : Controller
         }
     }
 }
-
-// Implement other actions like LoginWith2fa,

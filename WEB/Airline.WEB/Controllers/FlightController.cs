@@ -1,5 +1,5 @@
-using AirlineWeb.Stores.Interfaces;
-using AirlineWeb.ViewModels.Flight;
+using Airline.Application.Requests.Flight;
+using Airline.Application.Stores.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineWeb.Controllers;
@@ -37,7 +37,7 @@ public class FlightController : Controller
     // POST: /Flight/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(UpdateFlightView model)
+    public IActionResult Create(UpdateFlightRequest model)
     {
         if (ModelState.IsValid)
         {
@@ -51,14 +51,14 @@ public class FlightController : Controller
     // GET: /Flight/Edit/5
     public IActionResult Edit(int id)
     {
-        var flight = _flightStore.GetForUpdate(id);
+        var flight = _flightStore.GetById(id);
         return View(flight);
     }
 
     // POST: /Flight/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(UpdateFlightView model)
+    public IActionResult Edit(UpdateFlightRequest model)
     {
         if (ModelState.IsValid)
         {

@@ -1,5 +1,5 @@
 using Airline.Domain.Entities;
-using Airline.Infrastructure;
+using Airline.Infrastructure.Persistence;
 using Bogus;
 
 namespace AirlineWeb.Extensions;
@@ -16,10 +16,7 @@ public static class DatabaseInitializer
             CreateCities(context);
             CreateAirports(context);
             CreateFlights(context);
-            CreateUsers(context);
-            CreateRoles(context);
-            // CreateUserRoles(context);
-            CreateBookings(context);
+            // CreateBookings(context);
         }
         catch (Exception ex)
         {
@@ -54,7 +51,7 @@ public static class DatabaseInitializer
             var city = new City
             {
                 CityName = _faker.Address.City(),
-                CountryID = _faker.PickRandom(countries).ID // Связываем с существующей страной
+                CountryId = _faker.PickRandom(countries).Id // Связываем с существующей страной
             };
 
             context.Cities.Add(city);
@@ -74,8 +71,8 @@ public static class DatabaseInitializer
             var airport = new Airport
             {
                 Name = _faker.Address.StreetName() + " Airport",
-                CityID = _faker.PickRandom(cities).ID, // Связываем с существующим городом
-                CountryID = _faker.PickRandom(countries).ID // Связываем с существующей страной
+                CityId = _faker.PickRandom(cities).Id, // Связываем с существующим городом
+                CountryId = _faker.PickRandom(countries).Id // Связываем с существующей страной
             };
 
             context.Airports.Add(airport);
@@ -97,8 +94,8 @@ public static class DatabaseInitializer
             var flight = new Flight
             {
                 FlightNumber = _faker.Random.AlphaNumeric(6).ToUpper(),
-                DepartureAirportID = departureAirport.ID,
-                ArrivalAirportID = arrivalAirport.ID,
+                DepartureAirportId = departureAirport.Id,
+                ArrivalAirportId = arrivalAirport.Id,
                 DepartureTime = _faker.Date.Future(),
                 ArrivalTime = _faker.Date.Future(),
                 Price = _faker.Finance.Amount(100, 1000)
@@ -110,99 +107,27 @@ public static class DatabaseInitializer
         context.SaveChanges();
     }
 
-    public static void CreateUsers(AirlineDbContext context)
-    {
-        if (context.Users.Any()) return;
-
-        for (int i = 0; i < 200; i++)
-        {
-            var user = new User
-            {
-                UserName = _faker.Internet.UserName(),
-                PasswordHash = _faker.Internet.Password(),
-                Email = _faker.Internet.Email()
-            };
-
-            context.Users.Add(user);
-        }
-
-        context.SaveChanges();
-    }
-
-    public static void CreateRoles(AirlineDbContext context)
-    {
-        if (context.Roles.Any()) return;
-
-        var roles = new List<string> { "Admin", "User", "Manager" };
-
-        foreach (var roleName in roles)
-        {
-            var role = new Role
-            {
-                RoleName = roleName
-            };
-
-            context.Roles.Add(role);
-        }
-
-        context.SaveChanges();
-    }
-
-    // public static void CreateUserRoles(AirlineDbContext context)
+    // public static void CreateBookings(AirlineDbContext context)
     // {
-    //     if (context.UserRoles.Any()) return;
+    //     if (context.Bookings.Any()) return;
     //
     //     var users = context.Users.ToList(); // Получаем список пользователей для связи
-    //     var roles = context.Roles.ToList(); // Получаем список ролей для связи
+    //     var flights = context.Flights.ToList(); // Получаем список рейсов для связи
     //
-    //     var uniqueUserRoles = new HashSet<(int UserID, int RoleID)>();
-    //
-    //     while (uniqueUserRoles.Count < 200)
+    //     for (int i = 0; i < 200; i++)
     //     {
-    //         var userID = _faker.PickRandom(users).ID;
-    //         var roleID = _faker.PickRandom(roles).ID;
-    //
-    //         var userRolePair = (userID, roleID);
-    //
-    //         if (!uniqueUserRoles.Contains(userRolePair))
+    //         var booking = new Booking
     //         {
-    //             uniqueUserRoles.Add(userRolePair);
+    //             UserId = _faker.PickRandom(users).Id,
+    //             FlightId = _faker.PickRandom(flights).Id,
+    //             BookingDate = _faker.Date.Recent(),
+    //             SeatNumber = _faker.Random.String2(5, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"),
+    //             TotalPrice = _faker.Finance.Amount(100, 1000)
+    //         };
     //
-    //             var userRole = new UserRole
-    //             {
-    //                 UserID = userID,
-    //                 RoleID = roleID
-    //             };
-    //
-    //             context.UserRoles.Add(userRole);
-    //         }
+    //         context.Bookings.Add(booking);
     //     }
     //
     //     context.SaveChanges();
     // }
-
-
-    public static void CreateBookings(AirlineDbContext context)
-    {
-        if (context.Bookings.Any()) return;
-
-        var users = context.Users.ToList(); // Получаем список пользователей для связи
-        var flights = context.Flights.ToList(); // Получаем список рейсов для связи
-
-        for (int i = 0; i < 200; i++)
-        {
-            var booking = new Booking
-            {
-                UserID = _faker.PickRandom(users).ID,
-                FlightID = _faker.PickRandom(flights).ID,
-                BookingDate = _faker.Date.Recent(),
-                SeatNumber = _faker.Random.String2(5, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"),
-                TotalPrice = _faker.Finance.Amount(100, 1000)
-            };
-
-            context.Bookings.Add(booking);
-        }
-
-        context.SaveChanges();
-    }
 }

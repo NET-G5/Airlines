@@ -1,3 +1,6 @@
+using Airline.Application.Extensions;
+using Airline.Infrastructure.Extensions;
+using AirlineWeb.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Syncfusion.Licensing;
@@ -8,8 +11,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        // services.RegisterInfrastructure(configuration);
-        // services.RegisterApplication(configuration);
+        services.RegisterInfrastructure(configuration);
+        services.RegisterApplication(configuration);
 
         AddControllers(services);
         AddProviders(configuration);
@@ -22,6 +25,8 @@ public static class DependencyInjection
             options.AccessDeniedPath = "/Account/AccessDenied";
             options.SlidingExpiration = true;
         });
+
+        services.AddHttpContextAccessor();
 
         return services;
     }
@@ -39,6 +44,9 @@ public static class DependencyInjection
                     .RequireAuthenticatedUser()
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
+                options.Filters.Add(new ExceptionHandlerFilter());
+                options.Filters.Add(new HeaderResultFilter());
+                options.Filters.Add(new UserRequestFilter());
             })
             .AddJsonOptions(x =>
             {
@@ -49,7 +57,7 @@ public static class DependencyInjection
     private static void AddProviders(IConfiguration configuration)
     {
         var syncfusionKey = configuration.GetValue<string>("SyncfusionKey")
-                            ?? throw new InvalidOperationException("Syncfusion key is not found.");
+            ?? throw new InvalidOperationException("Syncfusion key is not found.");
 
         SyncfusionLicenseProvider.RegisterLicense(syncfusionKey);
     }
