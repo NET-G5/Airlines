@@ -1,5 +1,5 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model AirlineWeb.ViewModels.Flight.FlightView
+@model Airline.Application.ViewModels.Flight.FlightView
 
 @{
     ViewData["Title"] = "Flight Details";
@@ -35,7 +35,7 @@
                 <form asp-action="Buy" method="post" style="display: inline-block;">
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="userId" value="1" />
-                    <input type="hidden" name="flightId" value="@Model.ID" />
+                    <input type="hidden" name="flightId" value="@Model.Id" />
                     <button type="submit" class="btn btn-secondary btn-lg" style="background-color: #605DEC; width: 130px; height: 50px;">
                         Buy
                     </button>

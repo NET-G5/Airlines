@@ -1,4 +1,4 @@
-@model IEnumerable<AirlineWeb.ViewModels.Booking.BookingView>
+@model IEnumerable<Airline.Application.ViewModels.Booking.BookingView>
 
 <h2 class="text-center my-4">Your Bookings</h2>
 
@@ -21,7 +21,7 @@
             <td>@booking.TotalPrice.ToString("C")</td>
             <td>
                 <!-- Вы можете добавить действия для каждого бронирования -->
-                <a asp-action="Delete" asp-route-id="@booking.ID" class="btn btn-sm mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Booking">
+                <a asp-action="Delete" asp-route-id="@booking.Id" class="btn btn-sm mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Booking">
                     <i class="fa-solid fa-trash" style="color: #dc3545;"></i> <!-- Цвет иконки -->
                 </a>
             </td>

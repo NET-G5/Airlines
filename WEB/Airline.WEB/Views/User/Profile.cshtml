@@ -1,8 +1,8 @@
-@using AirlineWeb.ViewModels.Booking
-@model AirlineWeb.ViewModels.User.UserView
+@using Airline.Application.ViewModels.Booking
+@model Airline.Application.ViewModels.User.UserView
 
 @{
-    ViewData["Title"] = $"{Model.Username} Profile";
+    ViewData["Title"] = $"{Model.UserName} Profile";
 }
 
 <h1 class="text-center my-4">User Profile</h1>
@@ -16,12 +16,12 @@
                     <img src="/images/benjamin-franklin-cut-on-new-260nw-2031485351.webp" alt="Profile Image" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
                     <h5 class="card-title">Personal Information</h5>
                     <dl class="row">
-                        <dt class="col-sm-4">Username</dt>
-                        <dd class="col-sm-8">@Model.Username</dd>
+                        <dt class="col-sm-4">UserName</dt>
+                        <dd class="col-sm-8">@Model.UserName</dd>
                         <dt class="col-sm-4">Email</dt>
                         <dd class="col-sm-8">@Model.Email</dd>
                     </dl>
-                    <a href="@Url.Action("Edit", "User", new { id = Model.ID })" class="btn" data-bs-toggle="tooltip" style="width: 80px; background-color: #605DEC; color: white" data-bs-placement="top" title="Edit Profile"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="@Url.Action("Edit", "User", new { id = Model.Id })" class="btn" data-bs-toggle="tooltip" style="width: 80px; background-color: #605DEC; color: white" data-bs-placement="top" title="Edit Profile"><i class="fa-solid fa-pen-to-square"></i></a>
                 </div>
             </div>
         </div>

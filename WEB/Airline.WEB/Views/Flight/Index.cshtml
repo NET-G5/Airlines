@@ -1,5 +1,5 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<AirlineWeb.ViewModels.Flight.FlightView>
+@model IEnumerable<Airline.Application.ViewModels.Flight.FlightView>
 
 @{
 ViewData["Title"] = "Flight";
@@ -57,7 +57,7 @@ ViewData["Title"] = "Flight";
                 <tbody>
                 @foreach (var flight in Model)
                 {
-                <tr data-id="@flight.ID" class="clickable-row">
+                <tr data-id="@flight.Id" class="clickable-row">
                     <td>@flight.DepartureAirportCountry<br>@flight.DepartureAirportCity</td>
                     <td>@flight.ArrivalAirportCountry<br>@flight.ArrivalAirportCity</td>
                     <td>@flight.DepartureTime.ToString("dd MMM yyyy HH:mm")</td>

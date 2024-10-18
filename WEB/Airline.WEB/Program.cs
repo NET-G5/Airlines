@@ -1,68 +1,11 @@
-using Airline.Domain.Interfaces;
-using Airline.Infrastructure;
-using Airline.Infrastructure.Repositories;
+using Airline.Infrastructure.Persistence;
 using AirlineWeb.Extensions;
-using AirlineWeb.Stores;
-using AirlineWeb.Stores.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
-using UserStore = AirlineWeb.Stores.UserStore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("AirlineDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AirlineDbContextConnection' not found.");
 
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.ConfigureServices(builder.Configuration);
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXdccnRSRWJeWER0VkI=");
-
-builder.Services.AddDbContext<AirlineDbContext>(options =>
-    options.UseSqlServer("Server=localhost; Database=AirlineDataBase; User Id=sa; Password=MyP@ssw0rd123; TrustServerCertificate=True;"));
-
-builder.Services.AddScoped<ICommonRepository, CommonRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IFlightRepository, FlightRepository>();
-builder.Services.AddScoped<IBookingRepository, BookingRepository>();
-
-builder.Services.AddScoped<IUserStore, UserStore>();
-builder.Services.AddScoped<IFlightStore, FlightStore>();
-builder.Services.AddScoped<IBookingStore, BookingStore>();
-
-builder.Services
-    .AddControllers(options =>
-    {
-        var polisy = new AuthorizationPolicyBuilder()
-            .RequireAuthenticatedUser()
-            .Build();
-        options.Filters.Add(new AuthorizeFilter(polisy));
-    }) 
-    .AddJsonOptions(x =>
-    {
-        x.JsonSerializerOptions.PropertyNamingPolicy = null;
-    });
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<AirlineDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = false;
-    options.SignIn.RequireConfirmedPhoneNumber = false; 
-    
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 8; 
-
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-    options.Lockout.MaxFailedAccessAttempts = 5;
-    options.Lockout.AllowedForNewUsers = true;
-
-    options.User.RequireUniqueEmail = true;
-});
+builder.Services.AddControllersWithViews();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
